@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  background: #020403;
+  font-family: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: #020403;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(34, 211, 238, 0.11), transparent 30rem),
+    radial-gradient(circle at 92% 92%, rgba(168, 85, 247, 0.085), transparent 26rem),
+    radial-gradient(circle at 52% 12%, rgba(5, 255, 138, 0.045), transparent 22rem),
+    linear-gradient(180deg, #020403 0%, #03100b 100%);
+  color: #d6ffe9;
+}
+
+body::before {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  content: "";
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(214, 255, 233, 0.022) 0,
+    rgba(214, 255, 233, 0.022) 1px,
+    transparent 1px,
+    transparent 5px
+  );
+  mix-blend-mode: screen;
+  opacity: 0.62;
+}
+
+body::after {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 61;
+  content: "";
+  background:
+    linear-gradient(90deg, rgba(255, 0, 96, 0.025), transparent 18%, rgba(0, 255, 255, 0.018) 82%, transparent),
+    linear-gradient(180deg, transparent 0%, rgba(5, 255, 138, 0.045) 50%, transparent 100%);
+  background-size: 100% 100%, 100% 34rem;
+  opacity: 0.38;
+  transform: translateY(-100%);
+  animation: scan 9s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.35);
+  color: #ffffff;
+}
+
+.terminal-grid {
+  background-image:
+    linear-gradient(rgba(5, 255, 138, 0.034) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.032) 1px, transparent 1px);
+  background-attachment: fixed;
+  background-size: 28px 28px;
+}
+
+.terminal-frame {
+  position: relative;
+  isolation: isolate;
+}
+
+.terminal-frame::before {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  background:
+    linear-gradient(90deg, transparent, rgba(5, 255, 138, 0.05), transparent),
+    radial-gradient(circle at 50% 0%, rgba(34, 211, 238, 0.1), transparent 38rem);
+  opacity: 0.74;
+}
+
+.terminal-window {
+  position: relative;
+}
+
+.terminal-window::before {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 18%);
+  opacity: 0.52;
+}
+
+.terminal-window::after {
+  pointer-events: none;
+  position: absolute;
+  inset: 1px;
+  content: "";
+  border: 1px solid rgba(34, 211, 238, 0.08);
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 0.58em;
+  height: 1.05em;
+  margin-left: 0.2rem;
+  background: #05ff8a;
+  box-shadow: 0 0 12px rgba(5, 255, 138, 0.9);
+  vertical-align: -0.16em;
+  animation: blink 1s steps(2, start) infinite;
+}
+
+.terminal-glow-text {
+  text-shadow:
+    0 0 12px rgba(5, 255, 138, 0.35),
+    0 0 26px rgba(34, 211, 238, 0.12);
+}
+
+.terminal-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(5, 255, 138, 0.7) rgba(2, 4, 3, 0.8);
+}
+
+.terminal-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.terminal-scrollbar::-webkit-scrollbar-track {
+  background: rgba(2, 4, 3, 0.8);
+}
+
+.terminal-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(5, 255, 138, 0.65);
+}
+
+@media (min-width: 768px) {
+  .terminal-grid {
+    background-size: 36px 36px;
+  }
+}

@@ -1,0 +1,9 @@
+node_modules
+dist
+.netlify
+deno.lock
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
+netlify/functions/**/*.js
+netlify/functions/**/*.d.ts
