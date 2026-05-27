@@ -127,7 +127,28 @@ a {
   position: absolute;
   inset: 1px;
   content: "";
+  border-radius: 0.95rem;
   border: 1px solid rgba(34, 211, 238, 0.08);
+}
+
+.terminal-input {
+  width: 100%;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(5, 255, 138, 0.35);
+  background: rgba(0, 0, 0, 0.6);
+  padding: 0.75rem;
+  color: #05ff8a;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.terminal-input::placeholder {
+  color: rgba(214, 255, 233, 0.35);
+}
+
+.terminal-input:focus {
+  border-color: rgba(34, 211, 238, 0.9);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.18), 0 0 26px rgba(34, 211, 238, 0.16);
 }
 
 .terminal-cursor {

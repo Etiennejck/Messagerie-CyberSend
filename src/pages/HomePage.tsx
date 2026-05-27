@@ -7,8 +7,8 @@ import { TerminalWindow } from "../components/TerminalWindow";
 
 export function HomePage() {
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-7xl items-center px-4 py-6 sm:px-6 lg:px-8">
-      <div className="grid w-full gap-6 py-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-10">
+    <main className="mx-auto flex w-full max-w-7xl flex-1 items-center px-4 py-8 sm:px-6 lg:px-8">
+      <div className="grid w-full place-items-center gap-6 py-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10">
         <section className="max-w-3xl">
           <div className="mb-5 flex flex-wrap gap-2 sm:mb-6">
             <SecurityBadge label="SECURE MODE" />

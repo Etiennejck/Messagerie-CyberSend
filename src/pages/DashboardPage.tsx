@@ -11,10 +11,15 @@ export function DashboardPage() {
   const contactCount = 0;
 
   return (
-    <main className="mx-auto min-h-screen max-w-5xl px-4 py-8">
+    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center px-4 py-8 sm:px-6">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <Link to="/" className="text-2xl font-black uppercase text-terminal">CyberSend</Link>
-        <SecurityBadge label="SECURE MODE" />
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="rounded-xl border border-terminal/25 bg-black/35 px-3 py-2 text-xs text-emerald-100/80">
+            operator <span className="text-terminal">{mockUser.handle}</span>
+          </span>
+          <SecurityBadge label="SECURE MODE" />
+        </div>
       </div>
       <TerminalWindow title="operator.dashboard">
         <div className="grid gap-6 md:grid-cols-[1fr_0.8fr]">

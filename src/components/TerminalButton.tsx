@@ -14,7 +14,7 @@ const variants = {
 export function TerminalButton({ children, variant = "primary", className = "", ...props }: TerminalButtonProps) {
   return (
     <button
-      className={`inline-flex min-h-11 items-center justify-center gap-2 border px-4 py-2 text-sm font-semibold uppercase tracking-[0.14em] shadow-command transition duration-200 ease-out hover:-translate-y-0.5 focus:outline-none focus-visible:shadow-focusRing active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 ${variants[variant]} ${className}`}
+      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold uppercase tracking-[0.14em] shadow-command transition duration-200 ease-out hover:-translate-y-0.5 focus:outline-none focus-visible:shadow-focusRing active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 ${variants[variant]} ${className}`}
       {...props}
     >
       {children}
