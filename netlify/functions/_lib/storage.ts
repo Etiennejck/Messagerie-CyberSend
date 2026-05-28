@@ -19,10 +19,25 @@ export type StoredInvite = {
 
 export type StoredContact = {
   id: string;
+  relationshipId: string;
+  sessionId: string;
   ownerId: string;
+  peerId: string;
   handle: string;
   status: "pending" | "connected";
   createdAt: string;
+};
+
+export type EphemeralMessage = {
+  id: string;
+  sequence: number;
+  sessionId: string;
+  relationshipId: string;
+  fromUserId: string;
+  fromHandle: string;
+  text: string;
+  createdAt: string;
+  expiresAt: number;
 };
 
 export type StoredSignal = {
@@ -38,17 +53,24 @@ export type StoredSignal = {
 export type StorageAdapter = {
   createUser(input: { handle: string; password: string; publicKey?: JsonWebKey }): Promise<StoredUser>;
   findUserByHandle(handle: string): Promise<StoredUser | undefined>;
+  findUserById(userId: string): Promise<StoredUser | undefined>;
   createInvite(input: { ownerId: string; inviteKey: string; publicKey?: JsonWebKey }): Promise<StoredInvite>;
-  acceptInvite(input: { inviteKey: string; handle: string; publicKey?: JsonWebKey }): Promise<StoredContact>;
+  acceptInvite(input: { inviteKey: string; userId: string; handle: string; publicKey?: JsonWebKey }): Promise<StoredContact>;
   listContacts(ownerId: string): Promise<StoredContact[]>;
+  pushMessage(input: Omit<EphemeralMessage, "id" | "sequence" | "createdAt" | "expiresAt">): Promise<EphemeralMessage>;
+  pullMessages(input: { sessionId: string; afterSequence: number }): Promise<EphemeralMessage[]>;
   pushSignal(input: Omit<StoredSignal, "id" | "createdAt">): Promise<StoredSignal>;
   pullSignals(sessionId: string): Promise<StoredSignal[]>;
 };
 
 const users = new Map<string, StoredUser>();
+const usersById = new Map<string, StoredUser>();
 const invites = new Map<string, StoredInvite>();
 const contacts = new Map<string, StoredContact>();
 const signals = new Map<string, StoredSignal[]>();
+const messages = new Map<string, EphemeralMessage[]>();
+const messageSequences = new Map<string, number>();
+const messageTtlMs = 2 * 60 * 1000;
 
 export function hashInviteKey(inviteKey: string): string {
   return createHash("sha256").update(inviteKey).digest("hex");
@@ -73,11 +95,16 @@ export const memoryStorage: StorageAdapter = {
       createdAt: new Date().toISOString()
     };
     users.set(user.handle.toLowerCase(), user);
+    usersById.set(user.id, user);
     return user;
   },
 
   async findUserByHandle(handle) {
     return users.get(handle.toLowerCase());
+  },
+
+  async findUserById(userId) {
+    return usersById.get(userId);
   },
 
   async createInvite(input) {
@@ -96,22 +123,76 @@ export const memoryStorage: StorageAdapter = {
   async acceptInvite(input) {
     const inviteHash = hashInviteKey(input.inviteKey);
     const invite = invites.get(inviteHash);
-    const contact: StoredContact = {
-      id: randomUUID(),
-      ownerId: invite?.ownerId ?? "mock-owner",
+    if (!invite) {
+      throw new Error("Invite not found");
+    }
+    const owner = usersById.get(invite.ownerId);
+    if (!owner) {
+      throw new Error("Invite owner not found");
+    }
+    const accepter = usersById.get(input.userId) ?? {
+      id: input.userId,
       handle: input.handle,
-      status: "connected",
+      passwordHashPlaceholder: "volatile-auth-context",
+      publicKey: input.publicKey,
       createdAt: new Date().toISOString()
     };
-    if (invite) {
-      invite.acceptedBy = contact.id;
-    }
+    usersById.set(accepter.id, accepter);
+    users.set(accepter.handle.toLowerCase(), accepter);
+    const relationshipId = randomUUID();
+    const sessionId = hashInviteKey(`${invite.id}:${owner.id}:${accepter.id}`);
+    const createdAt = new Date().toISOString();
+    const contact: StoredContact = {
+      id: randomUUID(),
+      relationshipId,
+      sessionId,
+      ownerId: owner.id,
+      peerId: accepter.id,
+      handle: accepter.handle,
+      status: "connected",
+      createdAt
+    };
+    const reciprocalContact: StoredContact = {
+      id: randomUUID(),
+      relationshipId,
+      sessionId,
+      ownerId: accepter.id,
+      peerId: owner.id,
+      handle: owner.handle,
+      status: "connected",
+      createdAt
+    };
+    invite.acceptedBy = accepter.id;
     contacts.set(contact.id, contact);
+    contacts.set(reciprocalContact.id, reciprocalContact);
     return contact;
   },
 
   async listContacts(ownerId) {
     return Array.from(contacts.values()).filter((contact) => contact.ownerId === ownerId);
+  },
+
+  async pushMessage(input) {
+    const now = Date.now();
+    const current = (messages.get(input.sessionId) ?? []).filter((message) => message.expiresAt > now);
+    const sequence = (messageSequences.get(input.sessionId) ?? 0) + 1;
+    messageSequences.set(input.sessionId, sequence);
+    const message: EphemeralMessage = {
+      id: randomUUID(),
+      sequence,
+      ...input,
+      createdAt: new Date(now).toISOString(),
+      expiresAt: now + messageTtlMs
+    };
+    messages.set(input.sessionId, [...current, message].slice(-100));
+    return message;
+  },
+
+  async pullMessages(input) {
+    const now = Date.now();
+    const current = (messages.get(input.sessionId) ?? []).filter((message) => message.expiresAt > now);
+    messages.set(input.sessionId, current);
+    return current.filter((message) => message.sequence > input.afterSequence);
   },
 
   async pushSignal(input) {

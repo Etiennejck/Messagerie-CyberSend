@@ -5,14 +5,14 @@ import { TerminalButton } from "../components/TerminalButton";
 import { TerminalLine } from "../components/TerminalLine";
 import { TerminalWindow } from "../components/TerminalWindow";
 import { acceptInvite, createInvite } from "../lib/api";
+import { useAuth } from "../lib/auth";
 import { generateRandomInviteKey } from "../lib/crypto";
-import { mockUser } from "../lib/session";
 
 export function InvitePage() {
   const { inviteKey } = useParams();
+  const { user } = useAuth();
   const [generatedKey, setGeneratedKey] = useState("");
   const [pastedInvite, setPastedInvite] = useState("");
-  const [acceptedHandle, setAcceptedHandle] = useState("");
   const [status, setStatus] = useState("");
   const pastedKey = useMemo(() => {
     const value = pastedInvite.trim();
@@ -33,10 +33,14 @@ export function InvitePage() {
   const inviteLink = useMemo(() => (activeKey ? `${window.location.origin}/invite/${encodeURIComponent(activeKey)}` : ""), [activeKey]);
 
   async function handleGenerate() {
+    if (!user) {
+      setStatus("login required before generating an invite");
+      return;
+    }
     const key = generateRandomInviteKey();
     setGeneratedKey(key);
-    const result = await createInvite({ ownerId: mockUser.id, inviteKey: key });
-    setStatus(result.ok ? "invite stored as volatile mock relation metadata" : "invite generated locally; function unavailable");
+    const result = await createInvite({ ownerId: user.id, inviteKey: key, publicKey: user.publicKey });
+    setStatus(result.ok ? "invite stored as volatile relationship metadata" : result.error ?? "invite creation failed");
   }
 
   async function handleCopy() {
@@ -64,12 +68,16 @@ export function InvitePage() {
 
   async function handleAccept(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!activeKey || acceptedHandle.trim().length < 3) {
-      setStatus("enter a handle before accepting");
+    if (!user) {
+      setStatus("login required before accepting");
       return;
     }
-    const result = await acceptInvite({ inviteKey: activeKey, handle: acceptedHandle });
-    setStatus(result.ok ? "connection accepted; relation simulated" : "connection simulated locally; function unavailable");
+    if (!activeKey) {
+      setStatus("missing invitation key");
+      return;
+    }
+    const result = await acceptInvite({ inviteKey: activeKey, userId: user.id, handle: user.handle, publicKey: user.publicKey });
+    setStatus(result.ok ? `connection accepted; session ${result.data?.sessionId.slice(0, 12)}...` : result.error ?? "connection failed");
   }
 
   return (
@@ -80,8 +88,7 @@ export function InvitePage() {
           <form onSubmit={handleAccept} className="space-y-4">
             <TerminalLine tone="cyan">incoming secure invitation detected</TerminalLine>
             <TerminalLine prefix="key">{inviteKey}</TerminalLine>
-            <label htmlFor="accept-handle" className="block text-sm text-cyanwire">accept as handle</label>
-            <input id="accept-handle" value={acceptedHandle} onChange={(event) => setAcceptedHandle(event.target.value)} className="terminal-input" />
+            <TerminalLine prefix="user" tone="muted">{user?.handle}</TerminalLine>
             <TerminalButton type="submit">Accept connection</TerminalButton>
           </form>
         ) : (

@@ -4,10 +4,12 @@ import { TerminalButton } from "../components/TerminalButton";
 import { TerminalLine } from "../components/TerminalLine";
 import { TerminalWindow } from "../components/TerminalWindow";
 import { registerUser } from "../lib/api";
+import { useAuth } from "../lib/auth";
 import { exportPublicKey, generateClientKeyPair } from "../lib/crypto";
 
 export function RegisterPage() {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
   const [handle, setHandle] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -24,7 +26,12 @@ export function RegisterPage() {
     }
     const keyPair = await generateClientKeyPair();
     const publicKey = await exportPublicKey(keyPair.publicKey);
-    await registerUser({ handle, password, publicKey });
+    const result = await registerUser({ handle, password, publicKey });
+    if (!result.ok || !result.data?.user) {
+      setError(result.error ?? "registration failed");
+      return;
+    }
+    setUser(result.data.user);
     navigate("/dashboard");
   }
 

@@ -1,6 +1,7 @@
 import { Flame, Mail, MessageSquare, Radio, UserRound } from "lucide-react";
 import type { ReactNode } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../lib/auth";
 import { mockUser } from "../lib/session";
 import { SecurityBadge } from "./SecurityBadge";
 
@@ -19,7 +20,9 @@ const navItems = [
 export function AppShell({ children }: AppShellProps) {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const isHome = location.pathname === "/";
+  const displayUser = user?.handle ?? mockUser.handle;
 
   function handleBack() {
     if (window.history.state?.idx > 0) {
@@ -68,12 +71,29 @@ export function AppShell({ children }: AppShellProps) {
             })}
           </nav>
 
+          <div className="rounded-xl border border-terminal/25 bg-black/35 px-3 py-2 text-xs text-emerald-100/80 lg:hidden">
+            <span className="mr-2 text-cyanwire">user</span>
+            <span className="text-terminal">{displayUser}</span>
+          </div>
+
           <div className="hidden items-center gap-3 lg:flex">
             <SecurityBadge label="SECURE MODE" />
             <div className="rounded-xl border border-terminal/25 bg-black/35 px-3 py-2 text-xs text-emerald-100/80">
               <span className="mr-2 text-cyanwire">user</span>
-              <span className="text-terminal">{mockUser.handle}</span>
+              <span className="text-terminal">{displayUser}</span>
             </div>
+            {user ? (
+              <button
+                type="button"
+                onClick={() => {
+                  logout();
+                  navigate("/");
+                }}
+                className="rounded-xl border border-red-400/50 bg-red-500/10 px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-red-300 transition hover:border-red-300 hover:text-white"
+              >
+                logout
+              </button>
+            ) : null}
           </div>
         </div>
         {!isHome ? (

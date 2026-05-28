@@ -37,6 +37,28 @@ export type InviteResponse = {
   inviteLink: string;
 };
 
+export type Contact = {
+  id: string;
+  relationshipId: string;
+  sessionId: string;
+  ownerId: string;
+  peerId: string;
+  handle: string;
+  status: "pending" | "connected";
+  createdAt: string;
+};
+
+export type EphemeralMessage = {
+  id: string;
+  sequence: number;
+  sessionId: string;
+  relationshipId: string;
+  fromUserId: string;
+  fromHandle: string;
+  text: string;
+  createdAt: string;
+};
+
 export function registerUser(input: { handle: string; password: string; publicKey?: JsonWebKey }) {
   return request<AuthResponse>("register", {
     method: "POST",
@@ -58,15 +80,28 @@ export function createInvite(input: { ownerId: string; publicKey?: JsonWebKey; i
   });
 }
 
-export function acceptInvite(input: { inviteKey: string; handle: string; publicKey?: JsonWebKey }) {
-  return request<{ contactId: string; status: string }>("accept-invite", {
+export function acceptInvite(input: { inviteKey: string; userId: string; handle: string; publicKey?: JsonWebKey }) {
+  return request<{ contactId: string; relationshipId: string; sessionId: string; status: string }>("accept-invite", {
     method: "POST",
     body: JSON.stringify(input)
   });
 }
 
 export function getContacts(ownerId: string) {
-  return request<{ contacts: Array<{ id: string; handle: string; status: string }> }>(`contacts?ownerId=${encodeURIComponent(ownerId)}`, {
+  return request<{ contacts: Contact[] }>(`contacts?ownerId=${encodeURIComponent(ownerId)}`, {
+    method: "GET"
+  });
+}
+
+export function sendMessage(input: { sessionId: string; relationshipId: string; fromUserId: string; fromHandle: string; text: string }) {
+  return request<{ message: EphemeralMessage }>("messages", {
+    method: "POST",
+    body: JSON.stringify(input)
+  });
+}
+
+export function pullMessages(input: { sessionId: string; afterSequence: number }) {
+  return request<{ messages: EphemeralMessage[] }>(`messages?sessionId=${encodeURIComponent(input.sessionId)}&after=${input.afterSequence}`, {
     method: "GET"
   });
 }

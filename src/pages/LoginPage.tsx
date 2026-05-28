@@ -1,12 +1,14 @@
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../lib/api";
+import { useAuth } from "../lib/auth";
 import { TerminalButton } from "../components/TerminalButton";
 import { TerminalLine } from "../components/TerminalLine";
 import { TerminalWindow } from "../components/TerminalWindow";
 
 export function LoginPage() {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
   const [handle, setHandle] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -17,7 +19,12 @@ export function LoginPage() {
       setError("handle must be 3+ chars and password 8+ chars");
       return;
     }
-    await loginUser({ handle, password });
+    const result = await loginUser({ handle, password });
+    if (!result.ok || !result.data?.user) {
+      setError(result.error ?? "login failed");
+      return;
+    }
+    setUser(result.data.user);
     navigate("/dashboard");
   }
 
