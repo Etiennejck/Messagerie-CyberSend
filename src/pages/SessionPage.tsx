@@ -1,16 +1,28 @@
 import { Flame, TerminalSquare } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { CommandInput } from "../components/CommandInput";
 import { SecurityBadge } from "../components/SecurityBadge";
 import { TerminalButton } from "../components/TerminalButton";
 import { TerminalWindow } from "../components/TerminalWindow";
-import { getContacts, pullMessages, sendMessage, type Contact } from "../lib/api";
+import { getContacts, type Contact } from "../lib/api";
 import { useAuth } from "../lib/auth";
 import { createSessionEvent, type SessionEvent } from "../lib/session";
 
 const helpText = "commands: /help /status /whoami /clear /burn /connect <key> /msg <message>";
+const channelPrefix = "cybersend.session.";
+
+type BroadcastMessage = {
+  type: "message" | "burn";
+  sessionId: string;
+  relationshipId: string;
+  fromUserId: string;
+  fromHandle: string;
+  text?: string;
+};
 
 export function SessionPage() {
+  const location = useLocation();
   const { user } = useAuth();
   const [events, setEvents] = useState<SessionEvent[]>([
     createSessionEvent("system", "secure session shell online"),
@@ -19,7 +31,7 @@ export function SessionPage() {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [activeContact, setActiveContact] = useState<Contact | null>(null);
   const [transportStatus, setTransportStatus] = useState("standby");
-  const lastSequenceRef = useRef(0);
+  const channelRef = useRef<BroadcastChannel | null>(null);
 
   const renderedEvents = useMemo(() => events, [events]);
 
@@ -46,32 +58,55 @@ export function SessionPage() {
       return;
     }
     let cancelled = false;
-    setTransportStatus("polling");
-    const intervalId = window.setInterval(() => {
-      void pullMessages({ sessionId: activeContact.sessionId, afterSequence: lastSequenceRef.current }).then((result) => {
-        if (cancelled || !result.ok) {
-          return;
-        }
-        const incoming = result.data?.messages ?? [];
-        if (incoming.length === 0) {
-          return;
-        }
-        lastSequenceRef.current = Math.max(lastSequenceRef.current, ...incoming.map((message) => message.sequence));
-        setEvents((current) => [
-          ...current,
-          ...incoming
-            .filter((message) => message.fromUserId !== user.id)
-            .map((message) => createSessionEvent("received", `${message.fromHandle}: ${message.text}`))
-        ]);
-      });
-    }, 1400);
+    setTransportStatus("broadcastchannel:open");
+    const channel = new BroadcastChannel(`${channelPrefix}${activeContact.sessionId}`);
+    channelRef.current?.close();
+    channelRef.current = channel;
+    channel.onmessage = (event: MessageEvent<BroadcastMessage>) => {
+      if (cancelled || event.data.sessionId !== activeContact.sessionId || event.data.fromUserId === user.id) {
+        return;
+      }
+      if (event.data.type === "burn") {
+        channel.close();
+        channelRef.current = null;
+        setTransportStatus("closed");
+        setEvents([createSessionEvent("system", "remote burn received; session memory wiped")]);
+        return;
+      }
+      if (event.data.type === "message" && event.data.text) {
+        setEvents((current) => [...current, createSessionEvent("received", `${event.data.fromHandle}: ${event.data.text}`)]);
+      }
+    };
     return () => {
       cancelled = true;
-      window.clearInterval(intervalId);
+      channel.close();
+      if (channelRef.current === channel) {
+        channelRef.current = null;
+        setTransportStatus("standby");
+      }
     };
   }, [activeContact, user]);
 
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get("burn") === "1") {
+      wipeSession();
+    }
+  }, [location.search, activeContact, user]);
+
   function wipeSession() {
+    if (activeContact && user) {
+      channelRef.current?.postMessage({
+        type: "burn",
+        sessionId: activeContact.sessionId,
+        relationshipId: activeContact.relationshipId,
+        fromUserId: user.id,
+        fromHandle: user.handle
+      } satisfies BroadcastMessage);
+    }
+    channelRef.current?.close();
+    channelRef.current = null;
+    setTransportStatus("closed");
     setEvents([
       createSessionEvent("system", "session memory wiped"),
       createSessionEvent("system", "no logs persisted")
@@ -101,7 +136,6 @@ export function SessionPage() {
       if (!contact) {
         next.push(createSessionEvent("system", `relationship not found for ${key}`));
       } else {
-        lastSequenceRef.current = 0;
         setActiveContact(contact);
         next.push(createSessionEvent("system", `connected to ${contact.handle}; session ${contact.sessionId.slice(0, 12)}...`));
       }
@@ -110,20 +144,16 @@ export function SessionPage() {
       if (!user || !activeContact) {
         next.push(createSessionEvent("system", "no active relationship; accept an invite before messaging"));
       } else {
-        const result = await sendMessage({
+        channelRef.current?.postMessage({
+          type: "message",
           sessionId: activeContact.sessionId,
           relationshipId: activeContact.relationshipId,
           fromUserId: user.id,
           fromHandle: user.handle,
           text
-        });
-        if (result.ok && result.data?.message) {
-          lastSequenceRef.current = Math.max(lastSequenceRef.current, result.data.message.sequence);
-          next.push(createSessionEvent("sent", text));
-          next.push(createSessionEvent("system", "message queued ephemerally; no durable persistence"));
-        } else {
-          next.push(createSessionEvent("system", result.error ?? "message transport unavailable"));
-        }
+        } satisfies BroadcastMessage);
+        next.push(createSessionEvent("sent", text));
+        next.push(createSessionEvent("system", "message broadcast ephemerally; no durable persistence"));
       }
     } else {
       next.push(createSessionEvent("system", "unknown command; type /help"));
@@ -173,7 +203,7 @@ export function SessionPage() {
             ))
           )}
         </div>
-        <CommandInput onSubmit={handleCommand} />
+        <CommandInput onSubmit={handleCommand} disabled={!activeContact || transportStatus === "closed"} placeholder={activeContact ? "/msg encrypted hello" : "accept an invite before messaging"} />
       </TerminalWindow>
     </main>
   );

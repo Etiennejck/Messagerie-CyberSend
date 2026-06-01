@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { AppShell } from "../components/AppShell";
 import { useAuth } from "../lib/auth";
 import { DashboardPage } from "../pages/DashboardPage";
@@ -11,7 +11,8 @@ import { SessionPage } from "../pages/SessionPage";
 
 function ProtectedRoute({ children }: { children: ReactElement }) {
   const { isAuthenticated } = useAuth();
-  return isAuthenticated ? children : <Navigate to="/login" replace />;
+  const location = useLocation();
+  return isAuthenticated ? children : <Navigate to="/login" replace state={{ authRequired: true, from: location.pathname }} />;
 }
 
 export default function App() {

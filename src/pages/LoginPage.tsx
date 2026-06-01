@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { loginUser } from "../lib/api";
 import { useAuth } from "../lib/auth";
 import { TerminalButton } from "../components/TerminalButton";
@@ -8,10 +8,11 @@ import { TerminalWindow } from "../components/TerminalWindow";
 
 export function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { setUser } = useAuth();
   const [handle, setHandle] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState(() => location.state?.authRequired ? "auth required" : "");
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -25,7 +26,7 @@ export function LoginPage() {
       return;
     }
     setUser(result.data.user);
-    navigate("/dashboard");
+    navigate("/dashboard", { replace: true });
   }
 
   return (

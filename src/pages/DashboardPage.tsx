@@ -12,6 +12,7 @@ export function DashboardPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [contactCount, setContactCount] = useState(0);
+  const hasActiveSession = contactCount > 0;
 
   useEffect(() => {
     if (!user) {
@@ -41,6 +42,7 @@ export function DashboardPage() {
             <TerminalLine prefix="user">{user?.handle}</TerminalLine>
             <TerminalLine prefix="status" tone="cyan">SECURE MODE</TerminalLine>
             <TerminalLine prefix="contacts">{contactCount}</TerminalLine>
+            <TerminalLine prefix="session" tone={hasActiveSession ? "cyan" : "muted"}>{hasActiveSession ? "ACTIVE" : "NO ACTIVE SESSION"}</TerminalLine>
             <TerminalLine prefix="public-key" tone="muted">{user?.publicKey ? "ECDH-P256-ACTIVE" : "EPHEMERAL-AUTH"}</TerminalLine>
           </div>
           <div className="grid gap-3">
@@ -48,9 +50,9 @@ export function DashboardPage() {
               <KeyRound size={16} />
               Generate invite key
             </TerminalButton>
-            <TerminalButton type="button" variant="ghost" onClick={() => navigate("/session")}>
+            <TerminalButton type="button" variant="ghost" disabled={!hasActiveSession} onClick={() => navigate("/session")}>
               <Radio size={16} />
-              Open session
+              Open secure channel
             </TerminalButton>
             <TerminalButton type="button" variant="danger" onClick={() => navigate("/session?burn=1")}>
               <Flame size={16} />

@@ -32,7 +32,7 @@ export function RegisterPage() {
       return;
     }
     setUser(result.data.user);
-    navigate("/dashboard");
+    navigate("/dashboard", { replace: true });
   }
 
   return (

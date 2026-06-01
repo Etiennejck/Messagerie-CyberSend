@@ -1,5 +1,5 @@
 import { FormEvent, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { InviteCard } from "../components/InviteCard";
 import { TerminalButton } from "../components/TerminalButton";
 import { TerminalLine } from "../components/TerminalLine";
@@ -66,8 +66,8 @@ export function InvitePage() {
     }
   }
 
-  async function handleAccept(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function handleAccept(event?: FormEvent<HTMLFormElement>) {
+    event?.preventDefault();
     if (!user) {
       setStatus("login required before accepting");
       return;
@@ -105,11 +105,19 @@ export function InvitePage() {
               />
               {pastedKey ? <TerminalLine prefix="parsed" tone="cyan">{pastedKey}</TerminalLine> : null}
             </div>
+            {pastedKey ? <TerminalButton type="button" onClick={() => void handleAccept()}>Accept connection</TerminalButton> : null}
             <TerminalButton type="button" onClick={handleGenerate}>Generate invite key</TerminalButton>
             {activeKey ? <InviteCard inviteKey={activeKey} inviteLink={inviteLink} onCopy={handleCopy} onShare={handleShare} /> : null}
           </div>
         )}
         {status ? <div className="mt-5"><TerminalLine tone="cyan">{status}</TerminalLine></div> : null}
+        {status.startsWith("connection accepted") ? (
+          <div className="mt-5">
+            <Link to="/session">
+              <TerminalButton type="button">Open secure channel</TerminalButton>
+            </Link>
+          </div>
+        ) : null}
       </TerminalWindow>
       </div>
     </main>

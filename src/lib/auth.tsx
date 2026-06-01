@@ -14,15 +14,35 @@ type AuthContextValue = {
 };
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+const authStorageKey = "cybersend.auth.user";
+
+function readStoredUser(): AuthUser | null {
+  try {
+    const stored = window.localStorage.getItem(authStorageKey);
+    return stored ? (JSON.parse(stored) as AuthUser) : null;
+  } catch {
+    return null;
+  }
+}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUserState] = useState<AuthUser | null>(null);
+  const [user, setUserState] = useState<AuthUser | null>(() => readStoredUser());
+
+  function setUser(user: AuthUser) {
+    window.localStorage.setItem(authStorageKey, JSON.stringify(user));
+    setUserState(user);
+  }
+
+  function logout() {
+    window.localStorage.removeItem(authStorageKey);
+    setUserState(null);
+  }
 
   const value = useMemo<AuthContextValue>(() => ({
     user,
     isAuthenticated: Boolean(user),
-    setUser: setUserState,
-    logout: () => setUserState(null)
+    setUser,
+    logout
   }), [user]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
