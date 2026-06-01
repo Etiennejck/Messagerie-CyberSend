@@ -5,7 +5,7 @@ import { CommandInput } from "../components/CommandInput";
 import { SecurityBadge } from "../components/SecurityBadge";
 import { TerminalButton } from "../components/TerminalButton";
 import { TerminalWindow } from "../components/TerminalWindow";
-import { getContacts, type Contact } from "../lib/api";
+import { getContacts, pullMessages, sendMessage, type Contact } from "../lib/api";
 import { useAuth } from "../lib/auth";
 import { createSessionEvent, type SessionEvent } from "../lib/session";
 
@@ -32,6 +32,7 @@ export function SessionPage() {
   const [activeContact, setActiveContact] = useState<Contact | null>(null);
   const [transportStatus, setTransportStatus] = useState("standby");
   const channelRef = useRef<BroadcastChannel | null>(null);
+  const afterSequenceBySessionRef = useRef<Record<string, number>>({});
 
   const renderedEvents = useMemo(() => events, [events]);
 
@@ -86,6 +87,40 @@ export function SessionPage() {
       }
     };
   }, [activeContact, user]);
+
+  useEffect(() => {
+    if (!activeContact) {
+      return;
+    }
+    let cancelled = false;
+    const poll = async () => {
+      const afterSequence = afterSequenceBySessionRef.current[activeContact.sessionId] ?? 0;
+      const result = await pullMessages({ sessionId: activeContact.sessionId, afterSequence });
+      if (cancelled || !result.ok) {
+        return;
+      }
+      const messages = result.data?.messages ?? [];
+      if (messages.length === 0) {
+        return;
+      }
+      const nextAfter = messages[messages.length - 1]?.sequence ?? afterSequence;
+      afterSequenceBySessionRef.current[activeContact.sessionId] = Math.max(afterSequence, nextAfter);
+      const incoming = messages
+        .filter((message) => message.fromUserId !== user?.id)
+        .map((message) => createSessionEvent("received", `${message.fromHandle}: ${message.text}`));
+      if (incoming.length > 0) {
+        setEvents((current) => [...current, ...incoming]);
+      }
+    };
+    void poll();
+    const interval = window.setInterval(() => {
+      void poll();
+    }, 1500);
+    return () => {
+      cancelled = true;
+      window.clearInterval(interval);
+    };
+  }, [activeContact, user?.id]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -144,16 +179,24 @@ export function SessionPage() {
       if (!user || !activeContact) {
         next.push(createSessionEvent("system", "no active relationship; accept an invite before messaging"));
       } else {
-        channelRef.current?.postMessage({
-          type: "message",
+        const result = await sendMessage({
           sessionId: activeContact.sessionId,
           relationshipId: activeContact.relationshipId,
           fromUserId: user.id,
           fromHandle: user.handle,
           text
-        } satisfies BroadcastMessage);
-        next.push(createSessionEvent("sent", text));
-        next.push(createSessionEvent("system", "message broadcast ephemerally; no durable persistence"));
+        });
+        if (!result.ok) {
+          next.push(createSessionEvent("system", result.error ?? "message send failed"));
+        } else {
+          const sequence = result.data?.message.sequence;
+          if (typeof sequence === "number") {
+            const currentAfter = afterSequenceBySessionRef.current[activeContact.sessionId] ?? 0;
+            afterSequenceBySessionRef.current[activeContact.sessionId] = Math.max(currentAfter, sequence);
+          }
+          next.push(createSessionEvent("sent", text));
+          next.push(createSessionEvent("system", "message delivered to ephemeral relay; no durable persistence"));
+        }
       }
     } else {
       next.push(createSessionEvent("system", "unknown command; type /help"));
