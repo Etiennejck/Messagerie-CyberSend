@@ -1,10 +1,9 @@
 import { createReadStream } from "node:fs";
 import { access, stat } from "node:fs/promises";
 import { createServer } from "node:http";
-import { extname, join, normalize } from "node:path";
-import { fileURLToPath } from "node:url";
+import { dirname, extname, join, normalize } from "node:path";
 
-const root = fileURLToPath(new URL("..", import.meta.url));
+const root = join(dirname(process.argv[1]), "..");
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
 
