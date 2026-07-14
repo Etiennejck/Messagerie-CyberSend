@@ -1,9 +1,14 @@
-import { createReadStream } from "node:fs";
+import { createReadStream, existsSync } from "node:fs";
 import { access, stat } from "node:fs/promises";
 import { createServer } from "node:http";
-import { dirname, extname, join, normalize } from "node:path";
+import { extname, join, normalize } from "node:path";
 
-const root = join(dirname(process.argv[1]), "..");
+const workingDirectory = process.cwd();
+const root = existsSync(join(workingDirectory, "index.html"))
+  ? workingDirectory
+  : existsSync(join(workingDirectory, "dist", "index.html"))
+    ? join(workingDirectory, "dist")
+    : join(workingDirectory, "..");
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
 
