@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build && node scripts/prepare-sites.mjs",
+    "build": "tsc --noEmit && vite build --outDir dist/client && node scripts/prepare-sites.mjs",
     "netlify:dev": "npm run build && netlify dev --no-open",
     "preview": "vite preview"
   },
