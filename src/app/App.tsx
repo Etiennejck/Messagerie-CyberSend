@@ -8,6 +8,7 @@ import {
   CircleCheck,
   Clock3,
   ExternalLink,
+  Globe2,
   Heart,
   Link2,
   MapPin,
@@ -20,7 +21,7 @@ import {
   X,
 } from "lucide-react";
 
-type CountryKey = "belgium" | "france" | "germany" | "netherlands";
+type CountryKey = "belgium" | "france" | "germany" | "netherlands" | "spain";
 type AgeGroup = "U11" | "U12" | "U13" | "U14";
 type Availability = "open" | "full" | "unknown" | "closed";
 type PeriodFilter = "upcoming" | "past" | "all";
@@ -51,6 +52,7 @@ type Tournament = {
   sourceLabel: string;
   tone: "blue" | "orange" | "yellow" | "green";
   featured?: boolean;
+  international?: boolean;
 };
 
 const TODAY = "2026-07-15";
@@ -253,6 +255,7 @@ const tournaments: Tournament[] = [
     sourceUrl: "https://hnbt.nl/",
     sourceLabel: "HNBT officiel",
     tone: "green",
+    international: true,
   },
   {
     id: 9,
@@ -301,6 +304,7 @@ const tournaments: Tournament[] = [
     sourceUrl: "https://www.funcup.fun/",
     sourceLabel: "FUNCUP officiel",
     tone: "orange",
+    international: true,
   },
   {
     id: 11,
@@ -495,6 +499,7 @@ const tournaments: Tournament[] = [
     sourceUrl: "https://www.basketbal.vlaanderen/activiteiten/bruges-international-basketball-trophy",
     sourceLabel: "Basketbal Vlaanderen",
     tone: "yellow",
+    international: true,
   },
   {
     id: 19,
@@ -664,6 +669,283 @@ const tournaments: Tournament[] = [
     sourceLabel: "Ligue Hauts-de-France",
     tone: "orange",
   },
+  {
+    id: 26,
+    name: "Mondial Mini-Basket de Bourbourg",
+    city: "Bourbourg",
+    country: "france",
+    flag: "🇫🇷",
+    countryLabel: "France",
+    region: "Hauts-de-France",
+    startDate: "2026-04-04",
+    endDate: "2026-04-06",
+    dateLabel: "4–6 avril 2026",
+    ageGroups: ["U11"],
+    gender: "Garçons · équipes invitées",
+    format: "5×5 · 3 jours",
+    level: "International élite",
+    price: "Sur invitation",
+    teamInfo: "24 équipes · 240 jeunes",
+    availability: "closed",
+    organizer: "Sporting Club Bourbourg Basket",
+    description: "Le grand rendez-vous pascal du mini-basket réunit 24 équipes U11 et des clubs européens de premier plan à Bourbourg.",
+    sourceUrl: "https://www.bourbourg.fr/vivre-a-bourbourg/vie-associative-sports-et-loisirs/les-grands-evenements/",
+    sourceLabel: "Ville de Bourbourg",
+    tone: "blue",
+    international: true,
+  },
+  {
+    id: 27,
+    name: "Tournoi international U11 de Furdenheim",
+    city: "Furdenheim",
+    country: "france",
+    flag: "🇫🇷",
+    countryLabel: "France",
+    region: "Grand Est",
+    startDate: "2026-02-20",
+    endDate: "2026-02-22",
+    dateLabel: "20–22 février 2026",
+    ageGroups: ["U11"],
+    gender: "Équipes européennes",
+    format: "5×5 · 3 jours",
+    level: "International",
+    price: "Voir le club",
+    teamInfo: "Tournoi sur invitation",
+    availability: "closed",
+    organizer: "BASK Furdenheim",
+    description: "Le tournoi U11 international du BASK Furdenheim accueille de jeunes équipes européennes pour trois jours de compétition et d’échanges.",
+    sourceUrl: "https://fufubasket.org/wp-content/uploads/2025/09/AG_Ordinaire_BAS_Furdenheim_2025-1.pdf",
+    sourceLabel: "BASK Furdenheim",
+    tone: "orange",
+    international: true,
+  },
+  {
+    id: 28,
+    name: "Furdenheim International Tournament",
+    city: "Furdenheim",
+    country: "france",
+    flag: "🇫🇷",
+    countryLabel: "France",
+    region: "Grand Est",
+    startDate: "2026-05-22",
+    endDate: "2026-05-25",
+    dateLabel: "22–25 mai 2026",
+    ageGroups: ["U13"],
+    gender: "Filles et garçons",
+    format: "5×5 · 4 jours",
+    level: "International",
+    price: "Voir le club",
+    teamInfo: "Clubs européens",
+    availability: "closed",
+    organizer: "BASK Furdenheim",
+    description: "Le FIT U13 rassemble à la Pentecôte des équipes de plusieurs pays européens, avec résultats et programme publiés en ligne.",
+    sourceUrl: "https://fufubasket.org/tag/fit/",
+    sourceLabel: "BASK Furdenheim",
+    tone: "green",
+    international: true,
+  },
+  {
+    id: 29,
+    name: "ION X-Mas Tournament",
+    city: "Courtrai et environs",
+    country: "belgium",
+    flag: "🇧🇪",
+    countryLabel: "Belgique",
+    region: "Flandre-Occidentale",
+    startDate: "2025-12-27",
+    endDate: "2025-12-30",
+    dateLabel: "27–30 décembre 2025",
+    ageGroups: ["U12", "U14"],
+    gender: "Filles et garçons",
+    format: "5×5 · 4 jours",
+    level: "International élite",
+    price: "Voir l’organisateur",
+    teamInfo: "184 équipes · 19 pays",
+    availability: "closed",
+    organizer: "X-Mas Tournament Kortrijk",
+    description: "La dernière édition confirmée du grand tournoi de Noël de Courtrai a réuni 184 équipes de 19 pays dans plusieurs salles de la région.",
+    sourceUrl: "https://www.basketbal.vlaanderen/nieuws/184-ploegen-uit-19-landen-op-ion-x-mas-tournament-in-kortrijk-en-omstreken",
+    sourceLabel: "Basketbal Vlaanderen",
+    tone: "yellow",
+    international: true,
+  },
+  {
+    id: 30,
+    name: "Torneig Nord",
+    city: "Figueres / Peralada",
+    country: "spain",
+    flag: "🇪🇸",
+    countryLabel: "Espagne",
+    region: "Catalogne",
+    startDate: "2026-08-28",
+    endDate: "2026-09-13",
+    dateLabel: "28–30 août & 11–13 septembre 2026",
+    ageGroups: ["U12", "U14"],
+    gender: "Filles et garçons",
+    format: "2 week-ends · 5×5",
+    level: "International",
+    price: "Voir l’inscription",
+    teamInfo: "U14 puis U12",
+    availability: "open",
+    organizer: "Torneig Nord",
+    description: "Deux week-ends internationaux en Catalogne : U14 fin août, puis U12 mi-septembre, entre Figueres et Peralada.",
+    sourceUrl: "https://torneignord.com/es/",
+    registrationUrl: "https://torneignord.com/es/",
+    sourceLabel: "Torneig Nord officiel",
+    tone: "yellow",
+    featured: true,
+    international: true,
+  },
+  {
+    id: 31,
+    name: "La Roda U12 Future Stars",
+    city: "La Roda",
+    country: "spain",
+    flag: "🇪🇸",
+    countryLabel: "Espagne",
+    region: "Castille-La Manche",
+    startDate: "2026-07-01",
+    endDate: "2026-07-05",
+    dateLabel: "1–5 juillet 2026",
+    ageGroups: ["U12"],
+    gender: "Garçons",
+    format: "5×5 · 5 jours",
+    level: "International élite",
+    price: "Voir l’organisateur",
+    teamInfo: "14 équipes · 6 pays",
+    availability: "closed",
+    organizer: "Club Polideportivo La Roda",
+    description: "La 28e édition a accueilli 14 équipes issues de six pays et trois continents dans l’un des grands tournois U12 espagnols.",
+    sourceUrl: "https://clmpress.com/n/2026/06/la-roda-reunira-a-14-equipos-de-seis-paises-en-la-28-edicion-del-torneo-internacional-la-roda-u12-future-stars/",
+    sourceLabel: "CLM Press",
+    tone: "green",
+    international: true,
+  },
+  {
+    id: 32,
+    name: "Euro Pacé U13",
+    city: "Pacé / Saint-Gilles",
+    country: "france",
+    flag: "🇫🇷",
+    countryLabel: "France",
+    region: "Bretagne",
+    startDate: "2026-03-28",
+    endDate: "2026-03-29",
+    dateLabel: "28–29 mars 2026",
+    ageGroups: ["U13"],
+    gender: "Filles et garçons",
+    format: "5×5 · 2 jours",
+    level: "International",
+    price: "Voir l’organisateur",
+    teamInfo: "Équipes de 10 pays",
+    availability: "closed",
+    organizer: "Euro Pacé Association",
+    description: "Tournoi international U13 féminin et masculin organisé sur deux communes, avec des équipes venues de dix pays.",
+    sourceUrl: "https://www.europacebasket.fr/",
+    sourceLabel: "Euro Pacé officiel",
+    tone: "blue",
+    international: true,
+  },
+  {
+    id: 33,
+    name: "Globasket 2026",
+    city: "Lloret de Mar",
+    country: "spain",
+    flag: "🇪🇸",
+    countryLabel: "Espagne",
+    region: "Catalogne",
+    startDate: "2026-03-29",
+    endDate: "2026-04-10",
+    dateLabel: "29 mars–10 avril 2026",
+    ageGroups: ["U11", "U12", "U13", "U14"],
+    gender: "Filles et garçons",
+    format: "2 sessions internationales",
+    level: "International ouvert",
+    price: "Formules avec séjour",
+    teamInfo: "Clubs du monde entier",
+    availability: "closed",
+    organizer: "Globasket",
+    description: "Festival international de basket jeunesse sur la Costa Brava, en deux sessions, ouvert aux clubs, écoles et sélections U11 à U14.",
+    sourceUrl: "https://globasket.com/wp-content/uploads/GLOBASKET2026_ENG.pdf",
+    sourceLabel: "Globasket officiel",
+    tone: "orange",
+    international: true,
+  },
+  {
+    id: 34,
+    name: "Pirineos Basket Cup",
+    city: "La Cerdanya",
+    country: "spain",
+    flag: "🇪🇸",
+    countryLabel: "Espagne",
+    region: "Pyrénées catalanes",
+    startDate: "2026-06-12",
+    endDate: "2026-06-14",
+    dateLabel: "12–14 juin 2026",
+    ageGroups: ["U12", "U14"],
+    gender: "Filles et garçons",
+    format: "5×5 · minimum 5 matchs",
+    level: "International ouvert",
+    price: "Formules tournoi et séjour",
+    teamInfo: "Clubs de plusieurs pays",
+    availability: "closed",
+    organizer: "Pirineos Basket Cup",
+    description: "Tournoi de trois jours dans la Cerdagne espagnole pour plusieurs catégories, dont U12 et U14, avec au moins cinq matchs garantis.",
+    sourceUrl: "https://pirineosbasketcup.com/",
+    sourceLabel: "Pirineos Basket Cup officiel",
+    tone: "green",
+    international: true,
+  },
+  {
+    id: 35,
+    name: "Euro Youth Basketball Cup",
+    city: "Barcelone",
+    country: "spain",
+    flag: "🇪🇸",
+    countryLabel: "Espagne",
+    region: "Catalogne",
+    startDate: "2026-06-19",
+    endDate: "2026-06-21",
+    dateLabel: "19–21 juin 2026",
+    ageGroups: ["U12", "U14"],
+    gender: "Filles et garçons",
+    format: "5×5 · 3 jours",
+    level: "International",
+    price: "Formules avec séjour",
+    teamInfo: "Équipes du monde entier",
+    availability: "closed",
+    organizer: "European Sport Events",
+    description: "Compétition internationale jeunesse à Barcelone avec catégories féminines et masculines, dont U12 et U14.",
+    sourceUrl: "https://www.eurobasketballcup.com/es/",
+    sourceLabel: "Euro Youth Basketball Cup",
+    tone: "blue",
+    international: true,
+  },
+  {
+    id: 36,
+    name: "Tournoi international FIBA Castelldefels",
+    city: "Castelldefels",
+    country: "spain",
+    flag: "🇪🇸",
+    countryLabel: "Espagne",
+    region: "Catalogne",
+    startDate: "2026-03-31",
+    endDate: "2026-04-04",
+    dateLabel: "31 mars–4 avril 2026",
+    ageGroups: ["U13", "U14"],
+    gender: "Garçons",
+    format: "5×5 · 5 jours",
+    level: "International FIBA Europe",
+    price: "Voir l’organisateur",
+    teamInfo: "39 équipes",
+    availability: "closed",
+    organizer: "CB Castelldefels",
+    description: "Tournoi approuvé par FIBA Europe avec 39 équipes U13 et U14 venues d’Espagne, d’Allemagne, d’Angleterre, de Lituanie et de Porto Rico.",
+    sourceUrl: "https://www.castelldefels.org/es/actualidad/el-castell/noticias/gran-canaria-y-barca-campeones-torneo-internacional-fiba-cb-castelldefels",
+    sourceLabel: "Ville de Castelldefels",
+    tone: "yellow",
+    international: true,
+  },
 ];
 
 const sourceNetworks = [
@@ -685,9 +967,10 @@ const sourceNetworks = [
 const countries: { key: CountryKey | "all"; label: string; flag?: string }[] = [
   { key: "all", label: "Tous" },
   { key: "belgium", label: "Belgique", flag: "🇧🇪" },
-  { key: "france", label: "Nord France", flag: "🇫🇷" },
+  { key: "france", label: "France", flag: "🇫🇷" },
   { key: "germany", label: "Allemagne", flag: "🇩🇪" },
   { key: "netherlands", label: "Pays-Bas", flag: "🇳🇱" },
+  { key: "spain", label: "Espagne", flag: "🇪🇸" },
 ];
 
 const ageGroups: AgeGroup[] = ["U11", "U12", "U13", "U14"];
@@ -707,6 +990,7 @@ function App() {
   const [period, setPeriod] = useState<PeriodFilter>("upcoming");
   const [search, setSearch] = useState("");
   const [availableOnly, setAvailableOnly] = useState(false);
+  const [internationalOnly, setInternationalOnly] = useState(false);
   const [savedOnly, setSavedOnly] = useState(false);
   const [sortOrder, setSortOrder] = useState<SortOrder>("date-asc");
   const [saved, setSaved] = useState<number[]>(() => {
@@ -732,21 +1016,24 @@ function App() {
       const matchesAge = activeAges.length === 0 || activeAges.some((age) => tournament.ageGroups.includes(age));
       const matchesPeriod = period === "all" || (period === "past" ? isPast(tournament) : !isPast(tournament));
       const matchesAvailability = !availableOnly || (!isPast(tournament) && tournament.availability === "open");
+      const matchesInternational = !internationalOnly || tournament.international;
       const matchesSaved = !savedOnly || saved.includes(tournament.id);
       const matchesSearch = !needle || [tournament.name, tournament.city, tournament.region, tournament.organizer, tournament.sourceLabel]
         .join(" ")
         .toLocaleLowerCase("fr")
         .includes(needle);
-      return matchesCountry && matchesAge && matchesPeriod && matchesAvailability && matchesSaved && matchesSearch;
+      return matchesCountry && matchesAge && matchesPeriod && matchesAvailability && matchesInternational && matchesSaved && matchesSearch;
     });
 
     return [...result].sort((a, b) => {
       if (sortOrder === "name") return a.name.localeCompare(b.name, "fr");
       return sortOrder === "date-desc" ? b.startDate.localeCompare(a.startDate) : a.startDate.localeCompare(b.startDate);
     });
-  }, [activeAges, availableOnly, country, period, saved, savedOnly, search, sortOrder]);
+  }, [activeAges, availableOnly, country, internationalOnly, period, saved, savedOnly, search, sortOrder]);
 
   const upcomingCount = tournaments.filter((tournament) => !isPast(tournament)).length;
+  const internationalCount = tournaments.filter((tournament) => tournament.international).length;
+  const countryCount = new Set(tournaments.map((tournament) => tournament.country)).size;
 
   const toggleAge = (age: AgeGroup) => {
     setActiveAges((current) => current.includes(age) ? current.filter((item) => item !== age) : [...current, age]);
@@ -762,6 +1049,7 @@ function App() {
     setPeriod("upcoming");
     setSearch("");
     setAvailableOnly(false);
+    setInternationalOnly(false);
     setSavedOnly(false);
   };
 
@@ -818,11 +1106,11 @@ function App() {
           <div className="hero-copy">
             <div className="eyebrow"><CircleCheck size={15} /> Données vérifiées</div>
             <h1>Trouve le tournoi<br /><em>qui fait vibrer</em><br />ton équipe.</h1>
-            <p>Des tournois U11 à U14 réels et sourcés, collectés auprès des clubs, comités provinciaux et ligues régionales.</p>
+            <p>Des tournois U11 à U14 réels et sourcés, du circuit provincial aux grands rendez-vous internationaux européens.</p>
             <div className="hero-stats" aria-label="Statistiques">
               <div><strong>{tournaments.length}</strong><span>tournois sourcés</span></div>
               <div><strong>{upcomingCount}</strong><span>à venir</span></div>
-              <div><strong>4</strong><span>pays</span></div>
+              <div><strong>{countryCount}</strong><span>pays</span></div>
             </div>
           </div>
 
@@ -873,6 +1161,9 @@ function App() {
                   <button key={age} className={activeAges.includes(age) ? "age-chip active" : "age-chip"} onClick={() => toggleAge(age)}>{age}</button>
                 ))}
               </div>
+              <button className={internationalOnly ? "filter-chip international-filter active" : "filter-chip international-filter"} onClick={() => setInternationalOnly((value) => !value)}>
+                <Globe2 size={15} /> International
+              </button>
               <label className="availability-toggle">
                 <input type="checkbox" checked={availableOnly} onChange={(event) => setAvailableOnly(event.target.checked)} />
                 <span className="toggle-track"><span /></span>
@@ -922,6 +1213,7 @@ function App() {
                       <div className="age-list">
                         {tournament.ageGroups.map((age) => <span key={age}>{age}</span>)}
                         <span className="gender-tag">{tournament.gender}</span>
+                        {tournament.international && <span className="international-tag"><Globe2 size={11} /> International</span>}
                       </div>
                       <div className="card-meta">
                         <span><Users size={15} /> {tournament.teamInfo}</span>
@@ -955,6 +1247,7 @@ function App() {
               <span><strong>{sourceNetworks.length}</strong> réseaux officiels</span>
               <span><strong>5</strong> provinces AWBB</span>
               <span><strong>5</strong> comités HDF</span>
+              <span><strong>{internationalCount}</strong> tournois internationaux</span>
             </div>
           </div>
           <div className="source-grid">

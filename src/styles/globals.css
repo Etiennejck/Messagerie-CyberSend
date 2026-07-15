@@ -133,9 +133,11 @@ a { color: inherit; text-decoration: none; }
 .filter-group { display: flex; align-items: center; gap: 7px; }
 .filter-chip, .age-chip, .sort-button { border: 1px solid #d7d9d5; background: #fff; color: #555e6d; font-size: 12px; font-weight: 800; }
 .filter-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 12px; border-radius: 10px; }
+.filter-chip svg { flex: none; }
 .filter-chip span { font-size: 16px; }
 .filter-chip:hover, .filter-chip.active { border-color: var(--blue); color: var(--blue); background: #edf3ff; }
 .filter-chip.active { box-shadow: inset 0 0 0 1px var(--blue); }
+.international-filter.active { border-color: #e86824; background: #fff0e7; color: #a93f08; box-shadow: inset 0 0 0 1px #e86824; }
 .age-chip { width: 43px; height: 36px; border-radius: 10px; }
 .age-chip:hover, .age-chip.active { border-color: var(--ink); background: var(--ink); color: white; }
 .filter-divider { width: 1px; height: 28px; background: #d7d9d5; }
@@ -183,6 +185,7 @@ a { color: inherit; text-decoration: none; }
 .age-list { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
 .age-list span, .detail-ages span { padding: 5px 8px; border: 1px solid #b8caff; border-radius: 7px; background: #edf3ff; color: var(--blue); font-size: 10px; font-weight: 900; }
 .age-list .gender-tag { border-color: #e4d28e; background: #fff8d8; color: #715d1d; }
+.age-list .international-tag { display: inline-flex; align-items: center; gap: 4px; border-color: #ffc2a0; background: #fff0e7; color: #a93f08; }
 .card-meta { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-top: 1px dashed #d4d7d3; color: #626b79; font-size: 10px; font-weight: 700; }
 .card-meta span { display: inline-flex; align-items: center; gap: 5px; }
 .card-footer { display: flex; align-items: center; justify-content: space-between; min-height: 53px; margin: 0 -17px; padding: 0 17px; border-top: 1px solid #e0e2de; background: #fafaf6; }
