@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
   Archive,
   ArrowRight,
+  Building2,
   CalendarDays,
   Check,
   CircleCheck,
@@ -421,6 +422,264 @@ const tournaments: Tournament[] = [
     sourceLabel: "Ville de Loison-sous-Lens",
     tone: "yellow",
   },
+  {
+    id: 16,
+    name: "Crelan 3×3 Masters",
+    city: "Bruxelles / Anvers",
+    country: "belgium",
+    flag: "🇧🇪",
+    countryLabel: "Belgique",
+    region: "Place de la Monnaie puis Groenplaats",
+    startDate: "2026-07-18",
+    endDate: "2026-07-25",
+    dateLabel: "18 & 25 juillet 2026",
+    ageGroups: ["U12", "U14"],
+    gender: "U12 mixte · U14 garçons",
+    format: "3×3 · étapes + finale",
+    level: "Circuit officiel",
+    price: "Voir l’inscription",
+    teamInfo: "Bruxelles puis finale",
+    availability: "open",
+    organizer: "Crelan 3×3 Masters / AWBB",
+    description: "Dernières étapes du circuit estival officiel : Bruxelles le 18 juillet, puis finale nationale à Anvers le 25 juillet. Catégories U12 mixte et U14 garçons.",
+    sourceUrl: "https://www.awbb.be/news/3x3masters/",
+    registrationUrl: "https://3x3masters.be/",
+    sourceLabel: "AWBB",
+    tone: "orange",
+    featured: true,
+  },
+  {
+    id: 17,
+    name: "Challenge U12 AWBB 2026",
+    city: "5 provinces AWBB",
+    country: "belgium",
+    flag: "🇧🇪",
+    countryLabel: "Belgique",
+    region: "Hainaut, Bxl-BBW, Liège, Namur et Luxembourg",
+    startDate: "2026-01-03",
+    endDate: "2026-02-15",
+    dateLabel: "3 janvier–15 février 2026",
+    ageGroups: ["U12"],
+    gender: "Filles et garçons",
+    format: "Challenge technique",
+    level: "Provincial puis finale AWBB",
+    price: "Joueuses et joueurs affiliés",
+    teamInfo: "5 qualifications provinciales",
+    availability: "closed",
+    organizer: "AWBB et comités provinciaux",
+    description: "Qualifications organisées à Flénu-Frameries, Schaerbeek, Sprimont, Gembloux, Arlon et Musson, avant la finale AWBB. Quatre épreuves individuelles pour les U12.",
+    sourceUrl: "https://www.awbb.be/news/challengeu122026/",
+    sourceLabel: "AWBB / comités provinciaux",
+    tone: "blue",
+  },
+  {
+    id: 18,
+    name: "Bruges International Trophy",
+    city: "Bruges",
+    country: "belgium",
+    flag: "🇧🇪",
+    countryLabel: "Belgique",
+    region: "Flandre-Occidentale",
+    startDate: "2026-04-11",
+    endDate: "2026-04-12",
+    dateLabel: "11–12 avril 2026",
+    ageGroups: ["U14"],
+    gender: "Équipes internationales",
+    format: "5×5 · 2 jours",
+    level: "International",
+    price: "Voir l’organisateur",
+    teamInfo: "U14, U16 et U18",
+    availability: "closed",
+    organizer: "Flanders Basketball Events",
+    description: "Tournoi international organisé au KTA Brugge pour les catégories U14, U16 et U18.",
+    sourceUrl: "https://www.basketbal.vlaanderen/activiteiten/bruges-international-basketball-trophy",
+    sourceLabel: "Basketbal Vlaanderen",
+    tone: "yellow",
+  },
+  {
+    id: 19,
+    name: "3×3 Tornooi Duffel",
+    city: "Duffel",
+    country: "belgium",
+    flag: "🇧🇪",
+    countryLabel: "Belgique",
+    region: "Province d’Anvers",
+    startDate: "2026-05-14",
+    endDate: "2026-05-14",
+    dateLabel: "14 mai 2026",
+    ageGroups: ["U14"],
+    gender: "U14 mixte",
+    format: "3×3 · plein air",
+    level: "Tous niveaux",
+    price: "Voir la source",
+    teamInfo: "4 matchs minimum",
+    availability: "closed",
+    organizer: "BBC Duffel",
+    description: "Cinquième édition du tournoi 3×3 de Duffel, organisé au Sportcentrum Rooienberg avec au moins quatre matchs par équipe.",
+    sourceUrl: "https://www.basketbal.vlaanderen/activiteiten/3x3-tornooi-duffel26",
+    sourceLabel: "Basketbal Vlaanderen",
+    tone: "green",
+  },
+  {
+    id: 20,
+    name: "Tournoi U12–U14 Junior Arlonais",
+    city: "Arlon",
+    country: "belgium",
+    flag: "🇧🇪",
+    countryLabel: "Belgique",
+    region: "Province de Luxembourg",
+    startDate: "2026-05-16",
+    endDate: "2026-05-17",
+    dateLabel: "16–17 mai 2026",
+    ageGroups: ["U12", "U14"],
+    gender: "Équipes jeunes",
+    format: "5×5 · 2 jours",
+    level: "Tournoi de club",
+    price: "Voir le club",
+    teamInfo: "Arbitrage encadré AWBB",
+    availability: "closed",
+    organizer: "Junior Arlonais",
+    description: "Tournoi U12–U14 mentionné dans le procès-verbal officiel du département arbitrage AWBB, avec encadrement des arbitres de club par les formateurs provinciaux.",
+    sourceUrl: "https://www.awbb.be/wp-content/uploads/2026/04/awdptarb260412.pdf",
+    sourceLabel: "Procès-verbal AWBB",
+    tone: "orange",
+  },
+  {
+    id: 21,
+    name: "Coupe 3×3 BasketLux",
+    city: "Province de Luxembourg",
+    country: "belgium",
+    flag: "🇧🇪",
+    countryLabel: "Belgique",
+    region: "Luxembourg belge",
+    startDate: "2026-05-30",
+    endDate: "2026-05-30",
+    dateLabel: "30 mai 2026",
+    ageGroups: ["U12", "U14"],
+    gender: "Filles et garçons",
+    format: "3×3 · coupe provinciale",
+    level: "Provincial",
+    price: "Clubs de la province",
+    teamInfo: "U12, U14 et U16",
+    availability: "closed",
+    organizer: "Comité provincial BasketLux",
+    description: "Journée provinciale 3×3 annoncée pour les catégories U12, U14 et U16 féminines et masculines.",
+    sourceUrl: "https://www.awbb.be/wp-content/uploads/2025/10/awcplu250918.pdf",
+    sourceLabel: "Comité provincial Luxembourg",
+    tone: "blue",
+  },
+  {
+    id: 22,
+    name: "Beker van Antwerpen",
+    city: "Hulshout",
+    country: "belgium",
+    flag: "🇧🇪",
+    countryLabel: "Belgique",
+    region: "Province d’Anvers",
+    startDate: "2026-05-01",
+    endDate: "2026-05-03",
+    dateLabel: "1–3 mai 2026",
+    ageGroups: ["U12", "U14"],
+    gender: "Filles et mixte",
+    format: "Finales de coupe · 3 jours",
+    level: "Provincial",
+    price: "Équipes qualifiées",
+    teamInfo: "Finales U12 et U14",
+    availability: "closed",
+    organizer: "Basketbal Vlaanderen / Zuiderkempen Diamonds",
+    description: "Finales provinciales au Sportpark Joris Verhaegen : U12 filles et mixte, U14 mixte et filles.",
+    sourceUrl: "https://www.basketbal.vlaanderen/competitiegerelateerde-events/provinciale-bekerfinales/bekervanantwerpen",
+    sourceLabel: "Basketbal Vlaanderen",
+    tone: "yellow",
+  },
+  {
+    id: 23,
+    name: "Mercurius Tornooi U14",
+    city: "Berchem / Hoboken",
+    country: "belgium",
+    flag: "🇧🇪",
+    countryLabel: "Belgique",
+    region: "Province d’Anvers",
+    startDate: "2026-05-23",
+    endDate: "2026-05-23",
+    dateLabel: "23 mai 2026",
+    ageGroups: ["U14"],
+    gender: "Équipes de club",
+    format: "5×5 · 1 jour",
+    level: "Tournoi de club",
+    price: "Voir le club",
+    teamInfo: "U14 et U16",
+    availability: "closed",
+    organizer: "Mercurius BBC",
+    description: "Tournoi annuel du Mercurius BBC pour équipes U14 et U16, publié dans le calendrier officiel du club.",
+    sourceUrl: "https://www.mercuriusbbc.be/activiteiten",
+    sourceLabel: "Mercurius BBC",
+    tone: "green",
+  },
+  {
+    id: 24,
+    name: "Tournoi U11 de Linselles",
+    city: "Linselles",
+    country: "france",
+    flag: "🇫🇷",
+    countryLabel: "Nord France",
+    region: "Hauts-de-France",
+    startDate: "2026-06-27",
+    endDate: "2026-06-27",
+    dateLabel: "27 juin 2026",
+    ageGroups: ["U11"],
+    gender: "Garçons",
+    format: "5×5 · 1 jour",
+    level: "Départemental",
+    price: "Voir le club",
+    teamInfo: "9h–18h",
+    availability: "closed",
+    organizer: "Linselles Basket",
+    description: "Tournoi U11 masculin organisé à la salle Ramet de 9h à 18h, annoncé par la Ville de Linselles.",
+    sourceUrl: "https://www.linselles.fr/agenda/tournoi-u11-masculins/",
+    sourceLabel: "Ville de Linselles",
+    tone: "blue",
+  },
+  {
+    id: 25,
+    name: "Finales U13 Hauts-de-France",
+    city: "Oignies",
+    country: "france",
+    flag: "🇫🇷",
+    countryLabel: "Nord France",
+    region: "Pas-de-Calais",
+    startDate: "2026-05-30",
+    endDate: "2026-05-30",
+    dateLabel: "30 mai 2026",
+    ageGroups: ["U13"],
+    gender: "Filles et garçons",
+    format: "Finales régionales · 1 jour",
+    level: "Régional",
+    price: "Équipes qualifiées",
+    teamInfo: "U13F et U13M",
+    availability: "closed",
+    organizer: "Ligue Hauts-de-France de Basketball",
+    description: "Finales des Trophées des Champions U13 filles et garçons, regroupées au Complexe Sportif Coubertin-Lemaire d’Oignies.",
+    sourceUrl: "https://www.hautsdefrancebasketball.org/commission-sportive/finales-regionales-2026/",
+    sourceLabel: "Ligue Hauts-de-France",
+    tone: "orange",
+  },
+];
+
+const sourceNetworks = [
+  { name: "AWBB", area: "Wallonie & Bruxelles", kind: "Fédération régionale", flag: "🇧🇪", url: "https://www.awbb.be/" },
+  { name: "CP Bruxelles–Brabant wallon", area: "Bruxelles / Brabant wallon", kind: "Comité provincial", flag: "🇧🇪", url: "https://www.basket-brabant.be/" },
+  { name: "Basket Hainaut", area: "Hainaut", kind: "Comité provincial", flag: "🇧🇪", url: "https://baskethainaut.be/" },
+  { name: "CP Liège", area: "Province de Liège", kind: "Comité provincial", flag: "🇧🇪", url: "https://www.cpliege.be/" },
+  { name: "BasketLux", area: "Province de Luxembourg", kind: "Comité provincial", flag: "🇧🇪", url: "https://www.basketlux.be/" },
+  { name: "CP Namur", area: "Province de Namur", kind: "Comité provincial", flag: "🇧🇪", url: "https://www.cpnamur.be/" },
+  { name: "Basketbal Vlaanderen", area: "Flandre · agenda et clubs", kind: "Fédération régionale", flag: "🇧🇪", url: "https://www.basketbal.vlaanderen/activiteiten" },
+  { name: "Ligue Hauts-de-France", area: "Hauts-de-France", kind: "Ligue régionale", flag: "🇫🇷", url: "https://www.hautsdefrancebasketball.org/" },
+  { name: "Comité du Nord", area: "Nord (59) · annuaire clubs", kind: "Comité départemental", flag: "🇫🇷", url: "https://competitions.ffbb.com/ligues/hdf/comites/0059" },
+  { name: "Comité du Pas-de-Calais", area: "Pas-de-Calais (62) · annuaire clubs", kind: "Comité départemental", flag: "🇫🇷", url: "https://competitions.ffbb.com/ligues/hdf/comites/0062" },
+  { name: "Comité de l’Aisne", area: "Aisne (02) · annuaire clubs", kind: "Comité départemental", flag: "🇫🇷", url: "https://competitions.ffbb.com/ligues/hdf/comites/0002" },
+  { name: "Comité de l’Oise", area: "Oise (60) · annuaire clubs", kind: "Comité départemental", flag: "🇫🇷", url: "https://competitions.ffbb.com/ligues/hdf/comites/0060" },
+  { name: "Comité de la Somme", area: "Somme (80) · annuaire clubs", kind: "Comité départemental", flag: "🇫🇷", url: "https://competitions.ffbb.com/ligues/hdf/comites/0080" },
 ];
 
 const countries: { key: CountryKey | "all"; label: string; flag?: string }[] = [
@@ -531,6 +790,7 @@ function App() {
 
         <nav className={mobileMenu ? "main-nav is-open" : "main-nav"} aria-label="Navigation principale">
           <a className="active" href="#tournois" onClick={() => setMobileMenu(false)}>Tournois</a>
+          <a href="#sources" onClick={() => setMobileMenu(false)}>Sources suivies</a>
           <a href="#comment-ca-marche" onClick={() => setMobileMenu(false)}>Comment ça marche</a>
           <button className="nav-submit" onClick={() => { setShowSubmit(true); setMobileMenu(false); }}>Proposer un tournoi</button>
         </nav>
@@ -558,7 +818,7 @@ function App() {
           <div className="hero-copy">
             <div className="eyebrow"><CircleCheck size={15} /> Données vérifiées</div>
             <h1>Trouve le tournoi<br /><em>qui fait vibrer</em><br />ton équipe.</h1>
-            <p>Des tournois U11 à U14 réels et sourcés, entre Belgique, nord de la France, Allemagne et Pays-Bas.</p>
+            <p>Des tournois U11 à U14 réels et sourcés, collectés auprès des clubs, comités provinciaux et ligues régionales.</p>
             <div className="hero-stats" aria-label="Statistiques">
               <div><strong>{tournaments.length}</strong><span>tournois sourcés</span></div>
               <div><strong>{upcomingCount}</strong><span>à venir</span></div>
@@ -686,11 +946,34 @@ function App() {
           )}
         </section>
 
+        <section className="source-coverage" id="sources">
+          <div className="coverage-copy">
+            <span className="section-kicker"><Building2 size={16} /> Périmètre de collecte</span>
+            <h2>Les comités et leurs clubs sont dans le radar.</h2>
+            <p>Les agendas fédéraux, procès-verbaux provinciaux et annuaires officiels de clubs ci-dessous font partie des sources consultées. Une fiche n’est publiée que si une annonce exploitable confirme au minimum la date, le lieu et la catégorie.</p>
+            <div className="coverage-stats">
+              <span><strong>{sourceNetworks.length}</strong> réseaux officiels</span>
+              <span><strong>5</strong> provinces AWBB</span>
+              <span><strong>5</strong> comités HDF</span>
+            </div>
+          </div>
+          <div className="source-grid">
+            {sourceNetworks.map((source) => (
+              <a key={source.name} className="source-card" href={source.url} target="_blank" rel="noreferrer">
+                <span className="source-flag">{source.flag}</span>
+                <span><strong>{source.name}</strong><small>{source.area}</small></span>
+                <em>{source.kind}</em>
+                <ExternalLink size={15} />
+              </a>
+            ))}
+          </div>
+        </section>
+
         <section className="how-it-works" id="comment-ca-marche">
           <div className="how-copy">
             <span className="section-kicker light">Simple comme un lay-up</span>
             <h2>Du web au terrain.<br />Sans info inventée.</h2>
-            <p>HoopScout recoupe les annonces publiques. Les organisateurs restent la source de vérité pour les places, tarifs et règlements.</p>
+            <p>HoopScout recoupe les annonces publiques des clubs, comités et fédérations. Les organisateurs restent la source de vérité pour les places, tarifs et règlements.</p>
           </div>
           <div className="steps">
             <article><span>01</span><div><Search /><h3>Explore</h3><p>Filtre par pays, âge, période et disponibilité.</p></div></article>

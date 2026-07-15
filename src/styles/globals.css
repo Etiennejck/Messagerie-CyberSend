@@ -205,6 +205,23 @@ a { color: inherit; text-decoration: none; }
 .empty-state h3 { margin: 20px 0 5px; font-family: "Archivo Black"; text-transform: uppercase; }
 .empty-state p { margin: 0 0 22px; color: var(--muted); }
 
+.source-coverage { display: grid; grid-template-columns: .78fr 1.22fr; gap: 52px; max-width: 1240px; margin: 0 auto 92px; padding: 54px; border: 1px solid #cdd4e1; border-radius: 28px; background: #edf3ff; box-shadow: 11px 11px 0 var(--blue); }
+.coverage-copy { align-self: center; }
+.coverage-copy h2 { margin: 0; font-family: "Archivo Black", sans-serif; font-size: clamp(31px, 3.4vw, 46px); font-weight: 400; line-height: 1.03; letter-spacing: -.05em; text-transform: uppercase; }
+.coverage-copy > p { margin: 22px 0; color: #576579; font-size: 14px; line-height: 1.7; }
+.coverage-stats { display: flex; flex-wrap: wrap; gap: 8px; }
+.coverage-stats span { display: inline-flex; align-items: center; gap: 5px; padding: 8px 10px; border: 1px solid #b9c9e7; border-radius: 9px; background: rgba(255,255,255,.72); color: #536176; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+.coverage-stats strong { color: var(--blue); font-family: "Archivo Black"; font-size: 14px; }
+.source-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.source-card { position: relative; display: grid; grid-template-columns: 31px 1fr 17px; grid-template-rows: auto auto; align-items: center; min-height: 72px; padding: 11px 12px; border: 1px solid #cbd4e4; border-radius: 12px; background: white; transition: border-color .16s, transform .16s, box-shadow .16s; }
+.source-card:hover { border-color: var(--blue); box-shadow: 0 5px 0 rgba(21,94,239,.14); transform: translateY(-2px); }
+.source-flag { grid-row: 1 / 3; font-size: 21px; }
+.source-card > span:nth-child(2) { display: flex; flex-direction: column; min-width: 0; }
+.source-card strong { overflow: hidden; color: var(--ink); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.source-card small { overflow: hidden; color: #707a8b; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+.source-card em { color: var(--blue); font-size: 8px; font-style: normal; font-weight: 900; letter-spacing: .03em; text-transform: uppercase; }
+.source-card > svg { grid-column: 3; grid-row: 1 / 3; color: #7d8797; }
+
 .how-it-works { display: grid; grid-template-columns: .75fr 1.25fr; gap: 70px; align-items: center; max-width: 1240px; margin: 0 auto 90px; padding: 60px; border-radius: 28px; background: var(--ink); color: white; box-shadow: 12px 12px 0 var(--yellow); }
 .section-kicker.light { color: #8ab3ff; }
 .how-copy p { max-width: 430px; margin: 22px 0 0; color: #b9c0ca; line-height: 1.65; }
@@ -278,6 +295,7 @@ footer p { margin: 0; color: var(--ink); font-weight: 700; }
   .tournament-grid { grid-template-columns: repeat(2, 1fr); }
   .filter-row { flex-wrap: wrap; }
   .availability-toggle { margin-left: 0; }
+  .source-coverage { grid-template-columns: 1fr; margin-right: 24px; margin-left: 24px; padding: 42px; }
   .how-it-works { margin-right: 24px; margin-left: 24px; padding: 45px; gap: 45px; }
 }
 
@@ -302,6 +320,7 @@ footer p { margin: 0; color: var(--ink); font-weight: 700; }
   .filter-countries { width: 100%; overflow-x: auto; padding-bottom: 4px; }
   .filter-countries .filter-chip { flex: none; }
   .filter-divider { display: none; }
+  .source-grid { grid-template-columns: 1fr 1fr; }
   .how-it-works { grid-template-columns: 1fr; }
   footer { flex-wrap: wrap; }
 }
@@ -328,6 +347,9 @@ footer p { margin: 0; color: var(--ink); font-weight: 700; }
   .availability-toggle { width: 100%; }
   .tournament-grid { grid-template-columns: 1fr; }
   .tournament-card:hover { transform: none; }
+  .source-coverage { margin: 0 16px 70px; padding: 31px 19px; border-radius: 20px; box-shadow: 7px 7px 0 var(--blue); }
+  .coverage-copy h2 { font-size: 32px; }
+  .source-grid { grid-template-columns: 1fr; }
   .how-it-works { margin: 0 16px 65px; padding: 34px 22px; border-radius: 20px; box-shadow: 8px 8px 0 var(--yellow); }
   .steps article div { grid-template-columns: 31px 1fr; }
   .steps article div p { grid-column: 1 / 3; }
