@@ -13,6 +13,7 @@ import {
   Link2,
   MapPin,
   Menu,
+  RefreshCw,
   Search,
   ShieldCheck,
   Sparkles,
@@ -53,10 +54,19 @@ type Tournament = {
   tone: "blue" | "orange" | "yellow" | "green";
   featured?: boolean;
   international?: boolean;
+  quality?: boolean;
 };
 
-const TODAY = "2026-07-15";
-const VERIFIED_AT = "15 juillet 2026";
+type SourceWatchStatus = {
+  generatedAt: string;
+  total: number;
+  reachable: number;
+  changed: number;
+};
+
+const TODAY = "2026-07-16";
+const VERIFIED_AT = "16 juillet 2026";
+const SOURCE_STATUS_URL = "https://raw.githubusercontent.com/Etiennejck/Messagerie-CyberSend/main/public/source-status.json";
 
 const tournaments: Tournament[] = [
   {
@@ -946,6 +956,184 @@ const tournaments: Tournament[] = [
     tone: "yellow",
     international: true,
   },
+  {
+    id: 37,
+    name: "Tournoi U11 de Coquelles",
+    city: "Coquelles",
+    country: "france",
+    flag: "🇫🇷",
+    countryLabel: "France",
+    region: "Pas-de-Calais",
+    startDate: "2026-05-23",
+    endDate: "2026-05-24",
+    dateLabel: "23–24 mai 2026",
+    ageGroups: ["U11"],
+    gender: "Garçons",
+    format: "5×5 · 2 jours",
+    level: "Interrégional",
+    price: "Voir le club",
+    teamInfo: "Tournoi sur 2 jours",
+    availability: "closed",
+    organizer: "SC Coquelles Basket",
+    description: "Tournoi U11 sur deux jours à Coquelles, confirmé par le compte rendu d’une équipe participante de Saint-Charles Basket.",
+    sourceUrl: "https://www.saintcharlesbasket.fr/articles/210514-tournoi-u11m1-a-coquelles",
+    sourceLabel: "Saint-Charles Basket",
+    tone: "orange",
+    quality: true,
+  },
+  {
+    id: 38,
+    name: "Paris World Games Basket 2027",
+    city: "Paris",
+    country: "france",
+    flag: "🇫🇷",
+    countryLabel: "France",
+    region: "Île-de-France",
+    startDate: "2027-06-26",
+    endDate: "2027-06-27",
+    dateLabel: "26–27 juin 2027",
+    ageGroups: ["U11", "U12", "U13", "U14"],
+    gender: "Filles et garçons",
+    format: "5×5 · 2 jours",
+    level: "International",
+    price: "Packs tournoi et séjour",
+    teamInfo: "Clubs du monde entier",
+    availability: "open",
+    organizer: "Paris World Games",
+    description: "Tournoi international multisites à Paris, ouvert aux clubs affiliés à une fédération reconnue par la FIBA, avec catégories de U11 à U20.",
+    sourceUrl: "https://www.parisworldgames.com/fr/sport-basket-2/",
+    registrationUrl: "https://parisworldgames.cups.nu/",
+    sourceLabel: "Paris World Games officiel",
+    tone: "blue",
+    featured: true,
+    international: true,
+    quality: true,
+  },
+  {
+    id: 39,
+    name: "Final Four Île-de-France U13",
+    city: "Cergy-Pontoise",
+    country: "france",
+    flag: "🇫🇷",
+    countryLabel: "France",
+    region: "Val-d’Oise",
+    startDate: "2026-06-13",
+    endDate: "2026-06-14",
+    dateLabel: "13–14 juin 2026",
+    ageGroups: ["U13"],
+    gender: "Filles et garçons",
+    format: "Demi-finales + finales",
+    level: "Régional élite",
+    price: "Équipes qualifiées",
+    teamInfo: "8 équipes U13",
+    availability: "closed",
+    organizer: "Ligue Île-de-France de Basketball",
+    description: "L’aboutissement du championnat régional U13 réunit les quatre meilleures équipes féminines et masculines dans deux salles de Cergy-Pontoise.",
+    sourceUrl: "https://www.basketidf.com/final-four-dile-de-france-jeunes-2026-rendez-vous-a-cergy-pontoise-les-13-et-14-juin/",
+    sourceLabel: "Ligue Île-de-France",
+    tone: "yellow",
+    quality: true,
+  },
+  {
+    id: 40,
+    name: "Challenge Benjamin(e)s Île-de-France",
+    city: "Paris 16e",
+    country: "france",
+    flag: "🇫🇷",
+    countryLabel: "France",
+    region: "Île-de-France",
+    startDate: "2026-03-14",
+    endDate: "2026-03-14",
+    dateLabel: "14 mars 2026",
+    ageGroups: ["U13"],
+    gender: "Filles et garçons",
+    format: "Épreuves techniques · 1 jour",
+    level: "Sélection régionale",
+    price: "Participants qualifiés",
+    teamInfo: "Meilleurs U13 franciliens",
+    availability: "closed",
+    organizer: "Ligue Île-de-France de Basketball",
+    description: "Étape régionale du Challenge Benjamin(e)s au Stade Français, réservée aux meilleurs U13 franciliens sur les épreuves techniques fédérales.",
+    sourceUrl: "https://www.basketidf.com/challenge-benjamines-une-matinee-dediee-aux-jeunes-talents-a-paris/",
+    sourceLabel: "Ligue Île-de-France",
+    tone: "green",
+    quality: true,
+  },
+  {
+    id: 41,
+    name: "Les Princes du Basket U13",
+    city: "Bonneuil-sur-Marne",
+    country: "france",
+    flag: "🇫🇷",
+    countryLabel: "France",
+    region: "Val-de-Marne",
+    startDate: "2026-04-18",
+    endDate: "2026-04-19",
+    dateLabel: "18–19 avril 2026",
+    ageGroups: ["U13"],
+    gender: "Garçons",
+    format: "5×5 · 2 jours",
+    level: "Régional",
+    price: "Entrée gratuite",
+    teamInfo: "9h–21h",
+    availability: "closed",
+    organizer: "Les Princes du Basket · Levallois SC",
+    description: "Tournoi U13 masculin de niveau régional organisé à Bonneuil-sur-Marne par Les Princes du Basket, structure liée au Levallois Sporting Club.",
+    sourceUrl: "https://www.ville-bonneuil.fr/104-2626/agenda-du-moment/fiche/tournoi-les-princes-du-basket-u13-masculins.htm",
+    sourceLabel: "Ville de Bonneuil-sur-Marne",
+    tone: "blue",
+    quality: true,
+  },
+  {
+    id: 42,
+    name: "Les Princes du Basket U11",
+    city: "Bonneuil-sur-Marne",
+    country: "france",
+    flag: "🇫🇷",
+    countryLabel: "France",
+    region: "Val-de-Marne",
+    startDate: "2026-04-26",
+    endDate: "2026-04-26",
+    dateLabel: "26 avril 2026",
+    ageGroups: ["U11"],
+    gender: "Garçons",
+    format: "5×5 · 1 jour",
+    level: "Départemental",
+    price: "Entrée gratuite",
+    teamInfo: "9h–21h",
+    availability: "closed",
+    organizer: "Les Princes du Basket · Levallois SC",
+    description: "Journée U11 masculine à Bonneuil-sur-Marne, intégrée au tournoi multigénération Les Princes du Basket.",
+    sourceUrl: "https://www.ville-bonneuil.fr/104-2631/agenda-du-moment/fiche/tournoi-les-princes-du-basket-u11-masculins.htm",
+    sourceLabel: "Ville de Bonneuil-sur-Marne",
+    tone: "orange",
+    quality: true,
+  },
+  {
+    id: 43,
+    name: "Viking All-Star Jeunes",
+    city: "Paris 17e",
+    country: "france",
+    flag: "🇫🇷",
+    countryLabel: "France",
+    region: "Île-de-France",
+    startDate: "2026-06-06",
+    endDate: "2026-06-06",
+    dateLabel: "6 juin 2026",
+    ageGroups: ["U11", "U12", "U13", "U14"],
+    gender: "Équipes jeunes",
+    format: "Tournoi + skills + tirs",
+    level: "Festival urbain",
+    price: "Voir l’organisateur",
+    teamInfo: "Créneaux par âge",
+    availability: "closed",
+    organizer: "Viking Club Paris",
+    description: "Format All-Star mêlant tournoi par équipes, Skills Challenge et concours de tir au gymnase Balzac, pour les catégories U10 à U18.",
+    sourceUrl: "https://www.helloasso.com/associations/viking-club-paris/evenements/basketball-tournois-basketball-allstar-6-juin-2026",
+    sourceLabel: "Viking Club Paris · HelloAsso",
+    tone: "yellow",
+    quality: true,
+  },
 ];
 
 const sourceNetworks = [
@@ -962,6 +1150,8 @@ const sourceNetworks = [
   { name: "Comité de l’Aisne", area: "Aisne (02) · annuaire clubs", kind: "Comité départemental", flag: "🇫🇷", url: "https://competitions.ffbb.com/ligues/hdf/comites/0002" },
   { name: "Comité de l’Oise", area: "Oise (60) · annuaire clubs", kind: "Comité départemental", flag: "🇫🇷", url: "https://competitions.ffbb.com/ligues/hdf/comites/0060" },
   { name: "Comité de la Somme", area: "Somme (80) · annuaire clubs", kind: "Comité départemental", flag: "🇫🇷", url: "https://competitions.ffbb.com/ligues/hdf/comites/0080" },
+  { name: "Ligue Île-de-France", area: "Paris et région francilienne", kind: "Ligue régionale", flag: "🇫🇷", url: "https://www.basketidf.com/" },
+  { name: "Comité de Paris", area: "Paris (75) · compétitions jeunes", kind: "Comité départemental", flag: "🇫🇷", url: "https://competitions.ffbb.com/ligues/idf/comites/0075" },
 ];
 
 const countries: { key: CountryKey | "all"; label: string; flag?: string }[] = [
@@ -1004,10 +1194,22 @@ function App() {
   const [showSubmit, setShowSubmit] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
+  const [sourceWatch, setSourceWatch] = useState<SourceWatchStatus | null>(null);
 
   useEffect(() => {
     localStorage.setItem("hoopscout-favorites", JSON.stringify(saved));
   }, [saved]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`${SOURCE_STATUS_URL}?v=${Date.now()}`, { cache: "no-store", signal: controller.signal })
+      .then((response) => response.ok ? response.json() : Promise.reject(new Error("Source status unavailable")))
+      .then((status: SourceWatchStatus) => setSourceWatch(status))
+      .catch((error) => {
+        if (error instanceof Error && error.name !== "AbortError") setSourceWatch(null);
+      });
+    return () => controller.abort();
+  }, []);
 
   const filtered = useMemo(() => {
     const needle = search.trim().toLocaleLowerCase("fr");
@@ -1104,7 +1306,7 @@ function App() {
       <main id="top">
         <section className="hero">
           <div className="hero-copy">
-            <div className="eyebrow"><CircleCheck size={15} /> Données vérifiées</div>
+            <div className="eyebrow"><CircleCheck size={15} /> Données vérifiées · veille quotidienne</div>
             <h1>Trouve le tournoi<br /><em>qui fait vibrer</em><br />ton équipe.</h1>
             <p>Des tournois U11 à U14 réels et sourcés, du circuit provincial aux grands rendez-vous internationaux européens.</p>
             <div className="hero-stats" aria-label="Statistiques">
@@ -1192,6 +1394,7 @@ function App() {
                     <div className="card-banner">
                       <span className="country-label">{tournament.flag} {tournament.countryLabel}</span>
                       {tournament.featured && <span className="featured-label"><Sparkles size={12} /> À la une</span>}
+                      {tournament.quality && !tournament.featured && <span className="featured-label quality-label"><ShieldCheck size={12} /> Sélection qualité</span>}
                       <button
                         className={saved.includes(tournament.id) ? "heart-button saved" : "heart-button"}
                         onClick={() => toggleSaved(tournament.id)}
@@ -1243,6 +1446,11 @@ function App() {
             <span className="section-kicker"><Building2 size={16} /> Périmètre de collecte</span>
             <h2>Les comités et leurs clubs sont dans le radar.</h2>
             <p>Les agendas fédéraux, procès-verbaux provinciaux et annuaires officiels de clubs ci-dessous font partie des sources consultées. Une fiche n’est publiée que si une annonce exploitable confirme au minimum la date, le lieu et la catégorie.</p>
+            <div className="source-watch" aria-live="polite">
+              <RefreshCw size={17} />
+              <span><strong>Veille quotidienne active</strong><small>{sourceWatch ? `Dernier contrôle : ${new Date(sourceWatch.generatedAt).toLocaleString("fr-BE", { dateStyle: "medium", timeStyle: "short" })}` : "Dernier état vérifié inclus dans le site"}</small></span>
+              {sourceWatch && <em>{sourceWatch.reachable}/{sourceWatch.total} accessibles{sourceWatch.changed > 0 ? ` · ${sourceWatch.changed} changement${sourceWatch.changed > 1 ? "s" : ""}` : ""}</em>}
+            </div>
             <div className="coverage-stats">
               <span><strong>{sourceNetworks.length}</strong> réseaux officiels</span>
               <span><strong>5</strong> provinces AWBB</span>

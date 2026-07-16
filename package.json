@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build --outDir dist/client && node scripts/prepare-sites.mjs",
+    "check:sources": "node scripts/check-sources.mjs",
     "netlify:dev": "npm run build && netlify dev --no-open",
     "preview": "vite preview"
   },
