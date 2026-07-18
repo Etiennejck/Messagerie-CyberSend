@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-07-17T07:30:35.995Z",
+  "generatedAt": "2026-07-18T07:11:34.159Z",
   "total": 58,
   "reachable": 53,
-  "changed": 48,
+  "changed": 43,
   "schedule": "daily",
   "sources": [
     {
@@ -13,25 +13,25 @@
       "hash": null,
       "changed": false,
       "error": "AbortError",
-      "checkedAt": "2026-07-17T07:30:04.744Z"
+      "checkedAt": "2026-07-18T07:11:12.287Z"
     },
     {
       "url": "https://bbv-inside.de/events/redhawks-cup-2026/",
       "host": "bbv-inside.de",
       "ok": true,
       "status": 200,
-      "hash": "c441a4584708bef6",
+      "hash": "6fd6af51d429bdaf",
       "changed": true,
-      "checkedAt": "2026-07-17T07:29:48.121Z"
+      "checkedAt": "2026-07-18T07:10:55.593Z"
     },
     {
       "url": "https://www.basketball-bund.de/minifestivals/",
       "host": "basketball-bund.de",
       "ok": true,
       "status": 200,
-      "hash": "7b331b03c79489e5",
+      "hash": "c6b4ca93d23a4f74",
       "changed": true,
-      "checkedAt": "2026-07-17T07:29:47.677Z"
+      "checkedAt": "2026-07-18T07:10:55.077Z"
     },
     {
       "url": "https://ruhrbaskets-ob.de/rubacup.html",
@@ -40,34 +40,34 @@
       "status": 200,
       "hash": "5432c196a26b14fe",
       "changed": false,
-      "checkedAt": "2026-07-17T07:29:47.792Z"
+      "checkedAt": "2026-07-18T07:10:55.162Z"
     },
     {
       "url": "https://www.awbb.be/news/bcp-2026/",
       "host": "awbb.be",
       "ok": true,
       "status": 200,
-      "hash": "501284e89f4d5f6c",
+      "hash": "fafdf1538c21b013",
       "changed": true,
-      "checkedAt": "2026-07-17T07:29:49.541Z"
+      "checkedAt": "2026-07-18T07:10:56.920Z"
     },
     {
       "url": "https://phantomsboom.be/phantoms-3x3-tornooi/",
       "host": "phantomsboom.be",
       "ok": true,
       "status": 200,
-      "hash": "40670186ffa503b8",
+      "hash": "cb0b22e7a4a4e0e1",
       "changed": true,
-      "checkedAt": "2026-07-17T07:29:49.151Z"
+      "checkedAt": "2026-07-18T07:10:58.244Z"
     },
     {
       "url": "https://www.cpnamur.be/news/supers-coupes-de-lavenir/",
       "host": "cpnamur.be",
       "ok": true,
       "status": 200,
-      "hash": "6949c9d72ba70339",
+      "hash": "5572b31e95642f58",
       "changed": true,
-      "checkedAt": "2026-07-17T07:29:49.235Z"
+      "checkedAt": "2026-07-18T07:10:56.302Z"
     },
     {
       "url": "https://hnbt.nl/",
@@ -75,62 +75,62 @@
       "ok": true,
       "status": 200,
       "hash": "23ad3f4e1320b99b",
-      "changed": true,
-      "checkedAt": "2026-07-17T07:29:48.513Z"
+      "changed": false,
+      "checkedAt": "2026-07-18T07:10:55.736Z"
     },
     {
       "url": "https://basketball.nl/2026/03/24/wedstrijdprogramma-open-njk-v12-2026-bekend/",
       "host": "basketball.nl",
       "ok": true,
       "status": 200,
-      "hash": "8f3bd41fa99e78d6",
+      "hash": "1b6817b86dce0586",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:05.970Z"
+      "checkedAt": "2026-07-18T07:11:13.347Z"
     },
     {
       "url": "https://www.funcup.fun/",
       "host": "funcup.fun",
       "ok": true,
       "status": 200,
-      "hash": "16dcc95df1abdbc2",
+      "hash": "4a9d4e87a45b318a",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:05.455Z"
+      "checkedAt": "2026-07-18T07:11:13.117Z"
     },
     {
       "url": "https://tvb-web.de/abteilungen/basketball/bb-news/1245-summer-cup",
       "host": "tvb-web.de",
       "ok": true,
       "status": 200,
-      "hash": "fa2ed3987dc438a5",
+      "hash": "0c2677280b1248d1",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:05.690Z"
+      "checkedAt": "2026-07-18T07:11:13.199Z"
     },
     {
       "url": "https://www.bvsh.de/index.php/3x3/1183-itzebasket-2026",
       "host": "bvsh.de",
       "ok": true,
       "status": 200,
-      "hash": "cfeb93693fd24633",
+      "hash": "24cdb179911e9c58",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:06.195Z"
+      "checkedAt": "2026-07-18T07:11:13.762Z"
     },
     {
       "url": "https://www.helloasso.com/associations/caen-nord-basket/boutiques/2026-inscriptions-au-tournoi-jeunes-du-caen-nord-basket-2",
       "host": "helloasso.com",
       "ok": false,
       "status": 403,
-      "hash": "cd49814f80f0566d",
+      "hash": "137f27728cdd476c",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:05.150Z"
+      "checkedAt": "2026-07-18T07:11:12.561Z"
     },
     {
       "url": "https://www.linselles.fr/agenda/tournoi-u13-masculins/",
       "host": "linselles.fr",
       "ok": false,
       "status": 404,
-      "hash": "892399e8df6b5469",
+      "hash": "0a51d0828dbfb236",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:07.734Z"
+      "checkedAt": "2026-07-18T07:11:14.704Z"
     },
     {
       "url": "https://ville-loison-sous-lens.fr/agenda/evenement/139",
@@ -139,25 +139,25 @@
       "status": 200,
       "hash": "c1aa889020f8f6fa",
       "changed": false,
-      "checkedAt": "2026-07-17T07:30:06.106Z"
+      "checkedAt": "2026-07-18T07:11:13.228Z"
     },
     {
       "url": "https://www.awbb.be/news/3x3masters/",
       "host": "awbb.be",
       "ok": true,
       "status": 200,
-      "hash": "374b3f575be4071b",
+      "hash": "c21cf3140d325c7d",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:07.462Z"
+      "checkedAt": "2026-07-18T07:11:14.664Z"
     },
     {
       "url": "https://www.awbb.be/news/challengeu122026/",
       "host": "awbb.be",
       "ok": true,
       "status": 200,
-      "hash": "b0a9c5b1056e637a",
+      "hash": "b5612afe8007770e",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:09.333Z"
+      "checkedAt": "2026-07-18T07:11:16.237Z"
     },
     {
       "url": "https://www.basketbal.vlaanderen/activiteiten/bruges-international-basketball-trophy",
@@ -165,8 +165,8 @@
       "ok": true,
       "status": 200,
       "hash": "f330e0c4b12f53c2",
-      "changed": true,
-      "checkedAt": "2026-07-17T07:30:09.717Z"
+      "changed": false,
+      "checkedAt": "2026-07-18T07:11:16.341Z"
     },
     {
       "url": "https://www.basketbal.vlaanderen/activiteiten/3x3-tornooi-duffel26",
@@ -174,8 +174,8 @@
       "ok": true,
       "status": 200,
       "hash": "104722380cde6ab9",
-      "changed": true,
-      "checkedAt": "2026-07-17T07:30:09.712Z"
+      "changed": false,
+      "checkedAt": "2026-07-18T07:11:16.344Z"
     },
     {
       "url": "https://www.awbb.be/wp-content/uploads/2026/04/awdptarb260412.pdf",
@@ -184,7 +184,7 @@
       "status": 200,
       "hash": "7a956d7e8ad1d324",
       "changed": false,
-      "checkedAt": "2026-07-17T07:30:10.098Z"
+      "checkedAt": "2026-07-18T07:11:16.727Z"
     },
     {
       "url": "https://www.awbb.be/wp-content/uploads/2025/10/awcplu250918.pdf",
@@ -193,7 +193,7 @@
       "status": 200,
       "hash": "083999fc4092c43a",
       "changed": false,
-      "checkedAt": "2026-07-17T07:30:11.037Z"
+      "checkedAt": "2026-07-18T07:11:17.481Z"
     },
     {
       "url": "https://www.basketbal.vlaanderen/competitiegerelateerde-events/provinciale-bekerfinales/bekervanantwerpen",
@@ -201,44 +201,44 @@
       "ok": true,
       "status": 200,
       "hash": "9542e691e3fe0b82",
-      "changed": true,
-      "checkedAt": "2026-07-17T07:30:09.692Z"
+      "changed": false,
+      "checkedAt": "2026-07-18T07:11:17.017Z"
     },
     {
       "url": "https://www.mercuriusbbc.be/activiteiten",
       "host": "mercuriusbbc.be",
       "ok": true,
       "status": 200,
-      "hash": "0b9c89286dd08424",
+      "hash": "5aeff8d04324d7ea",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:11.505Z"
+      "checkedAt": "2026-07-18T07:11:17.501Z"
     },
     {
       "url": "https://www.linselles.fr/agenda/tournoi-u11-masculins/",
       "host": "linselles.fr",
       "ok": false,
       "status": 404,
-      "hash": "892399e8df6b5469",
+      "hash": "0a51d0828dbfb236",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:08.498Z"
+      "checkedAt": "2026-07-18T07:11:15.514Z"
     },
     {
       "url": "https://www.hautsdefrancebasketball.org/commission-sportive/finales-regionales-2026/",
       "host": "hautsdefrancebasketball.org",
       "ok": true,
       "status": 200,
-      "hash": "bbf6755b87799315",
+      "hash": "550d4d5ab39f104c",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:15.001Z"
+      "checkedAt": "2026-07-18T07:11:18.076Z"
     },
     {
       "url": "https://www.bourbourg.fr/vivre-a-bourbourg/vie-associative-sports-et-loisirs/les-grands-evenements/",
       "host": "bourbourg.fr",
       "ok": true,
       "status": 200,
-      "hash": "d19f34e1adb54572",
+      "hash": "98929f3a9ea52ee1",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:21.488Z"
+      "checkedAt": "2026-07-18T07:11:18.238Z"
     },
     {
       "url": "https://fufubasket.org/wp-content/uploads/2025/09/AG_Ordinaire_BAS_Furdenheim_2025-1.pdf",
@@ -247,52 +247,52 @@
       "status": 200,
       "hash": "3afad4c5f971dde3",
       "changed": false,
-      "checkedAt": "2026-07-17T07:30:13.108Z"
+      "checkedAt": "2026-07-18T07:11:18.609Z"
     },
     {
       "url": "https://fufubasket.org/tag/fit/",
       "host": "fufubasket.org",
       "ok": true,
       "status": 200,
-      "hash": "14d927013571f35c",
+      "hash": "6c753ebf880f138e",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:12.707Z"
+      "checkedAt": "2026-07-18T07:11:18.356Z"
     },
     {
       "url": "https://www.basketbal.vlaanderen/nieuws/184-ploegen-uit-19-landen-op-ion-x-mas-tournament-in-kortrijk-en-omstreken",
       "host": "basketbal.vlaanderen",
       "ok": true,
       "status": 200,
-      "hash": "f45f29ffc9d6fd93",
+      "hash": "24f595c9a7b42d3d",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:12.947Z"
+      "checkedAt": "2026-07-18T07:11:17.778Z"
     },
     {
       "url": "https://torneignord.com/es/",
       "host": "torneignord.com",
       "ok": true,
       "status": 200,
-      "hash": "c4f91e5dc74101b9",
+      "hash": "ccff6211acfefd96",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:26.725Z"
+      "checkedAt": "2026-07-18T07:11:26.791Z"
     },
     {
       "url": "https://clmpress.com/n/2026/06/la-roda-reunira-a-14-equipos-de-seis-paises-en-la-28-edicion-del-torneo-internacional-la-roda-u12-future-stars/",
       "host": "clmpress.com",
       "ok": true,
       "status": 200,
-      "hash": "5c1ac3fc3949559a",
+      "hash": "46222623a6f347d2",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:13.173Z"
+      "checkedAt": "2026-07-18T07:11:18.649Z"
     },
     {
       "url": "https://www.europacebasket.fr/",
       "host": "europacebasket.fr",
       "ok": true,
       "status": 200,
-      "hash": "e1796c19e22c9a10",
+      "hash": "aee5910a2d3ef145",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:12.749Z"
+      "checkedAt": "2026-07-18T07:11:18.501Z"
     },
     {
       "url": "https://globasket.com/wp-content/uploads/GLOBASKET2026_ENG.pdf",
@@ -301,16 +301,16 @@
       "status": 200,
       "hash": "75b37d1e77286cce",
       "changed": false,
-      "checkedAt": "2026-07-17T07:30:28.368Z"
+      "checkedAt": "2026-07-18T07:11:28.150Z"
     },
     {
       "url": "https://pirineosbasketcup.com/",
       "host": "pirineosbasketcup.com",
       "ok": true,
       "status": 200,
-      "hash": "bd6c134a1379227a",
+      "hash": "69ab2306e0ebf42c",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:29.565Z"
+      "checkedAt": "2026-07-18T07:11:28.832Z"
     },
     {
       "url": "https://www.eurobasketballcup.com/es/",
@@ -319,7 +319,7 @@
       "status": 200,
       "hash": "6749ebb460f7cac8",
       "changed": false,
-      "checkedAt": "2026-07-17T07:30:27.892Z"
+      "checkedAt": "2026-07-18T07:11:27.841Z"
     },
     {
       "url": "https://www.castelldefels.org/es/actualidad/el-castell/noticias/gran-canaria-y-barca-campeones-torneo-internacional-fiba-cb-castelldefels",
@@ -328,97 +328,97 @@
       "status": 200,
       "hash": "3fa59ded52925a86",
       "changed": false,
-      "checkedAt": "2026-07-17T07:30:27.970Z"
+      "checkedAt": "2026-07-18T07:11:28.196Z"
     },
     {
       "url": "https://www.saintcharlesbasket.fr/articles/210514-tournoi-u11m1-a-coquelles",
       "host": "saintcharlesbasket.fr",
       "ok": true,
       "status": 200,
-      "hash": "11644fe7def5e397",
+      "hash": "e1c0d1e9ba681d0f",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:29.086Z"
+      "checkedAt": "2026-07-18T07:11:28.463Z"
     },
     {
       "url": "https://www.parisworldgames.com/fr/sport-basket-2/",
       "host": "parisworldgames.com",
       "ok": true,
       "status": 200,
-      "hash": "ca2d550077116754",
+      "hash": "c1f47b6c30cc87ba",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:27.767Z"
+      "checkedAt": "2026-07-18T07:11:28.066Z"
     },
     {
       "url": "https://www.basketidf.com/final-four-dile-de-france-jeunes-2026-rendez-vous-a-cergy-pontoise-les-13-et-14-juin/",
       "host": "basketidf.com",
       "ok": true,
       "status": 200,
-      "hash": "8469e21816b8e9a8",
+      "hash": "12102baa6a0909f6",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:29.806Z"
+      "checkedAt": "2026-07-18T07:11:29.490Z"
     },
     {
       "url": "https://www.basketidf.com/challenge-benjamines-une-matinee-dediee-aux-jeunes-talents-a-paris/",
       "host": "basketidf.com",
       "ok": true,
       "status": 200,
-      "hash": "4b7d9a58acf866e2",
+      "hash": "88920f81d3f1e026",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:29.762Z"
+      "checkedAt": "2026-07-18T07:11:29.288Z"
     },
     {
       "url": "https://www.ville-bonneuil.fr/104-2626/agenda-du-moment/fiche/tournoi-les-princes-du-basket-u13-masculins.htm",
       "host": "ville-bonneuil.fr",
       "ok": true,
       "status": 200,
-      "hash": "a582320ae4344007",
+      "hash": "b57f835d3a4f27ec",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:31.106Z"
+      "checkedAt": "2026-07-18T07:11:31.228Z"
     },
     {
       "url": "https://www.ville-bonneuil.fr/104-2631/agenda-du-moment/fiche/tournoi-les-princes-du-basket-u11-masculins.htm",
       "host": "ville-bonneuil.fr",
       "ok": true,
       "status": 200,
-      "hash": "126995e8c77502e9",
+      "hash": "052373ae01da9bd7",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:31.704Z"
+      "checkedAt": "2026-07-18T07:11:30.646Z"
     },
     {
       "url": "https://www.helloasso.com/associations/viking-club-paris/evenements/basketball-tournois-basketball-allstar-6-juin-2026",
       "host": "helloasso.com",
       "ok": false,
       "status": 403,
-      "hash": "41644d8bc010a034",
+      "hash": "005cacb251e64cc6",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:30.034Z"
+      "checkedAt": "2026-07-18T07:11:29.606Z"
     },
     {
       "url": "https://www.awbb.be/",
       "host": "awbb.be",
       "ok": true,
       "status": 200,
-      "hash": "358fc83a56b04a97",
+      "hash": "16ce4738c3cb102b",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:31.943Z"
+      "checkedAt": "2026-07-18T07:11:31.333Z"
     },
     {
       "url": "https://www.basket-brabant.be/",
       "host": "basket-brabant.be",
       "ok": true,
       "status": 200,
-      "hash": "d6bfc99dd99a2bfe",
+      "hash": "19943031232f0c09",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:31.483Z"
+      "checkedAt": "2026-07-18T07:11:31.187Z"
     },
     {
       "url": "https://baskethainaut.be/",
       "host": "baskethainaut.be",
       "ok": true,
       "status": 200,
-      "hash": "6d3c2891ca33829f",
+      "hash": "848fe1d9a09b932c",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:32.879Z"
+      "checkedAt": "2026-07-18T07:11:31.193Z"
     },
     {
       "url": "https://www.cpliege.be/",
@@ -427,25 +427,25 @@
       "status": 200,
       "hash": "55a7cada90ab7199",
       "changed": false,
-      "checkedAt": "2026-07-17T07:30:30.972Z"
+      "checkedAt": "2026-07-18T07:11:30.399Z"
     },
     {
       "url": "https://www.basketlux.be/",
       "host": "basketlux.be",
       "ok": true,
       "status": 200,
-      "hash": "c4b148a34ba5bd94",
+      "hash": "8ffad1bca5406959",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:31.894Z"
+      "checkedAt": "2026-07-18T07:11:31.317Z"
     },
     {
       "url": "https://www.cpnamur.be/",
       "host": "cpnamur.be",
       "ok": true,
       "status": 200,
-      "hash": "cb019a2d6d7d9ff9",
+      "hash": "b2b3c512c45a3b5f",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:34.089Z"
+      "checkedAt": "2026-07-18T07:11:32.475Z"
     },
     {
       "url": "https://www.basketbal.vlaanderen/activiteiten",
@@ -453,80 +453,80 @@
       "ok": true,
       "status": 200,
       "hash": "6ac4aa09c3d234ef",
-      "changed": true,
-      "checkedAt": "2026-07-17T07:30:34.102Z"
+      "changed": false,
+      "checkedAt": "2026-07-18T07:11:31.778Z"
     },
     {
       "url": "https://www.hautsdefrancebasketball.org/",
       "host": "hautsdefrancebasketball.org",
       "ok": true,
       "status": 200,
-      "hash": "f56e910dfe118f24",
+      "hash": "10ba9f1cb4158f51",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:33.598Z"
+      "checkedAt": "2026-07-18T07:11:31.773Z"
     },
     {
       "url": "https://competitions.ffbb.com/ligues/hdf/comites/0059",
       "host": "competitions.ffbb.com",
       "ok": true,
       "status": 200,
-      "hash": "1feb7e9a6af40a45",
+      "hash": "c70f0c99ce2aba32",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:34.258Z"
+      "checkedAt": "2026-07-18T07:11:31.766Z"
     },
     {
       "url": "https://competitions.ffbb.com/ligues/hdf/comites/0062",
       "host": "competitions.ffbb.com",
       "ok": true,
       "status": 200,
-      "hash": "819402fa9477376f",
+      "hash": "dc9e26769ad21252",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:34.327Z"
+      "checkedAt": "2026-07-18T07:11:31.821Z"
     },
     {
       "url": "https://competitions.ffbb.com/ligues/hdf/comites/0002",
       "host": "competitions.ffbb.com",
       "ok": true,
       "status": 200,
-      "hash": "c681c5fe6b8b1507",
+      "hash": "2add22553cdfc1f0",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:34.312Z"
+      "checkedAt": "2026-07-18T07:11:31.731Z"
     },
     {
       "url": "https://competitions.ffbb.com/ligues/hdf/comites/0060",
       "host": "competitions.ffbb.com",
       "ok": true,
       "status": 200,
-      "hash": "aefac728b07cf2a5",
+      "hash": "a60b5304e16be652",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:34.241Z"
+      "checkedAt": "2026-07-18T07:11:31.746Z"
     },
     {
       "url": "https://competitions.ffbb.com/ligues/hdf/comites/0080",
       "host": "competitions.ffbb.com",
       "ok": true,
       "status": 200,
-      "hash": "a792d8a1e016504c",
+      "hash": "e7b5917b6c258e75",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:34.228Z"
+      "checkedAt": "2026-07-18T07:11:31.705Z"
     },
     {
       "url": "https://www.basketidf.com/",
       "host": "basketidf.com",
       "ok": true,
       "status": 200,
-      "hash": "d27e238e1aee882b",
+      "hash": "96ef36b99299cd6a",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:35.995Z"
+      "checkedAt": "2026-07-18T07:11:34.159Z"
     },
     {
       "url": "https://competitions.ffbb.com/ligues/idf/comites/0075",
       "host": "competitions.ffbb.com",
       "ok": true,
       "status": 200,
-      "hash": "d58b66ce041dd872",
+      "hash": "a171f5a9a39a516d",
       "changed": true,
-      "checkedAt": "2026-07-17T07:30:34.836Z"
+      "checkedAt": "2026-07-18T07:11:33.051Z"
     }
   ]
 }
