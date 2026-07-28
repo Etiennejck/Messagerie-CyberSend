@@ -64,9 +64,25 @@ type SourceWatchStatus = {
   changed: number;
 };
 
-const TODAY = "2026-07-16";
-const VERIFIED_AT = "16 juillet 2026";
 const SOURCE_STATUS_URL = "https://raw.githubusercontent.com/Etiennejck/Messagerie-CyberSend/main/public/source-status.json";
+
+const getBrusselsDateKey = (date = new Date()) => {
+  const parts = new Intl.DateTimeFormat("fr-BE", {
+    timeZone: "Europe/Brussels",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(date);
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${values.year}-${values.month}-${values.day}`;
+};
+
+const formatCheckedDate = (isoDate: string) => new Intl.DateTimeFormat("fr-BE", {
+  timeZone: "Europe/Brussels",
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+}).format(new Date(isoDate));
 
 const tournaments: Tournament[] = [
   {
@@ -1165,10 +1181,10 @@ const countries: { key: CountryKey | "all"; label: string; flag?: string }[] = [
 
 const ageGroups: AgeGroup[] = ["U11", "U12", "U13", "U14"];
 
-const isPast = (tournament: Tournament) => tournament.endDate < TODAY;
+const isPast = (tournament: Tournament, today: string) => tournament.endDate < today;
 
-const getAvailability = (tournament: Tournament) => {
-  if (isPast(tournament)) return { label: "Édition terminée", className: "closed" };
+const getAvailability = (tournament: Tournament, today: string) => {
+  if (isPast(tournament, today)) return { label: "Édition terminée", className: "closed" };
   if (tournament.availability === "open") return { label: "Inscriptions ouvertes", className: "" };
   if (tournament.availability === "full") return { label: "Complet", className: "full" };
   return { label: "À confirmer", className: "unknown" };
@@ -1195,6 +1211,7 @@ function App() {
   const [submitted, setSubmitted] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [sourceWatch, setSourceWatch] = useState<SourceWatchStatus | null>(null);
+  const [today, setToday] = useState(getBrusselsDateKey);
 
   useEffect(() => {
     localStorage.setItem("hoopscout-favorites", JSON.stringify(saved));
@@ -1211,13 +1228,23 @@ function App() {
     return () => controller.abort();
   }, []);
 
+  useEffect(() => {
+    const refreshToday = () => setToday(getBrusselsDateKey());
+    const timer = window.setInterval(refreshToday, 60_000);
+    window.addEventListener("focus", refreshToday);
+    return () => {
+      window.clearInterval(timer);
+      window.removeEventListener("focus", refreshToday);
+    };
+  }, []);
+
   const filtered = useMemo(() => {
     const needle = search.trim().toLocaleLowerCase("fr");
     const result = tournaments.filter((tournament) => {
       const matchesCountry = country === "all" || tournament.country === country;
       const matchesAge = activeAges.length === 0 || activeAges.some((age) => tournament.ageGroups.includes(age));
-      const matchesPeriod = period === "all" || (period === "past" ? isPast(tournament) : !isPast(tournament));
-      const matchesAvailability = !availableOnly || (!isPast(tournament) && tournament.availability === "open");
+      const matchesPeriod = period === "all" || (period === "past" ? isPast(tournament, today) : !isPast(tournament, today));
+      const matchesAvailability = !availableOnly || (!isPast(tournament, today) && tournament.availability === "open");
       const matchesInternational = !internationalOnly || tournament.international;
       const matchesSaved = !savedOnly || saved.includes(tournament.id);
       const matchesSearch = !needle || [tournament.name, tournament.city, tournament.region, tournament.organizer, tournament.sourceLabel]
@@ -1231,11 +1258,12 @@ function App() {
       if (sortOrder === "name") return a.name.localeCompare(b.name, "fr");
       return sortOrder === "date-desc" ? b.startDate.localeCompare(a.startDate) : a.startDate.localeCompare(b.startDate);
     });
-  }, [activeAges, availableOnly, country, internationalOnly, period, saved, savedOnly, search, sortOrder]);
+  }, [activeAges, availableOnly, country, internationalOnly, period, saved, savedOnly, search, sortOrder, today]);
 
-  const upcomingCount = tournaments.filter((tournament) => !isPast(tournament)).length;
+  const upcomingCount = tournaments.filter((tournament) => !isPast(tournament, today)).length;
   const internationalCount = tournaments.filter((tournament) => tournament.international).length;
   const countryCount = new Set(tournaments.map((tournament) => tournament.country)).size;
+  const checkedDateLabel = sourceWatch ? formatCheckedDate(sourceWatch.generatedAt) : null;
 
   const toggleAge = (age: AgeGroup) => {
     setActiveAges((current) => current.includes(age) ? current.filter((item) => item !== age) : [...current, age]);
@@ -1317,11 +1345,10 @@ function App() {
           </div>
 
           <div className="hero-visual" aria-hidden="true">
-            <div className="court-board">
-              <div className="court-lines"><span className="court-circle" /><span className="court-key" /></div>
+            <div className="child-court-art">
+              <img src="/assets/terrain-basket-enfant.webp" alt="" />
               <div className="floating-card card-one"><span>🇧🇪</span><div><b>Bruxelles</b><small>13 sept. · U12/U14</small></div></div>
               <div className="floating-card card-two"><span>🇩🇪</span><div><b>Potsdam</b><small>29 août · U11–U14</small></div></div>
-              <div className="big-ball"><span className="ball-line line-a" /><span className="ball-line line-b" /><span className="ball-line line-c" /></div>
               <span className="motion-dot dot-one" /><span className="motion-dot dot-two" /><span className="motion-cross">+</span>
             </div>
           </div>
@@ -1388,9 +1415,9 @@ function App() {
           {filtered.length > 0 ? (
             <div className="tournament-grid">
               {filtered.map((tournament) => {
-                const status = getAvailability(tournament);
+                const status = getAvailability(tournament, today);
                 return (
-                  <article className={`tournament-card tone-${tournament.tone} ${isPast(tournament) ? "is-past" : ""}`} key={tournament.id}>
+                  <article className={`tournament-card tone-${tournament.tone} ${isPast(tournament, today) ? "is-past" : ""}`} key={tournament.id}>
                     <div className="card-banner">
                       <span className="country-label">{tournament.flag} {tournament.countryLabel}</span>
                       {tournament.featured && <span className="featured-label"><Sparkles size={12} /> À la une</span>}
@@ -1448,8 +1475,8 @@ function App() {
             <p>Les agendas fédéraux, procès-verbaux provinciaux et annuaires officiels de clubs ci-dessous font partie des sources consultées. Une fiche n’est publiée que si une annonce exploitable confirme au minimum la date, le lieu et la catégorie.</p>
             <div className="source-watch" aria-live="polite">
               <RefreshCw size={17} />
-              <span><strong>Veille quotidienne active</strong><small>{sourceWatch ? `Dernier contrôle : ${new Date(sourceWatch.generatedAt).toLocaleString("fr-BE", { dateStyle: "medium", timeStyle: "short" })}` : "Dernier état vérifié inclus dans le site"}</small></span>
-              {sourceWatch && <em>{sourceWatch.reachable}/{sourceWatch.total} accessibles{sourceWatch.changed > 0 ? ` · ${sourceWatch.changed} changement${sourceWatch.changed > 1 ? "s" : ""}` : ""}</em>}
+              <span><strong>Veille quotidienne active</strong><small>{sourceWatch ? `Dernier contrôle : ${new Date(sourceWatch.generatedAt).toLocaleString("fr-BE", { dateStyle: "medium", timeStyle: "short" })}` : "Synchronisation en cours"}</small></span>
+              {sourceWatch && <em>{sourceWatch.reachable}/{sourceWatch.total} accessibles · page synchronisée</em>}
             </div>
             <div className="coverage-stats">
               <span><strong>{sourceNetworks.length}</strong> réseaux officiels</span>
@@ -1485,14 +1512,14 @@ function App() {
 
         <section className="trust-note">
           <ShieldCheck size={22} />
-          <p><strong>Sources contrôlées le {VERIFIED_AT}.</strong> Les disponibilités peuvent changer rapidement : confirme toujours auprès de l’organisateur avant déplacement ou paiement.</p>
+          <p><strong>{checkedDateLabel ? `Sources contrôlées le ${checkedDateLabel}.` : "Synchronisation des sources en cours."}</strong> Les disponibilités peuvent changer rapidement : confirme toujours auprès de l’organisateur avant déplacement ou paiement.</p>
         </section>
       </main>
 
       <footer>
         <a className="brand footer-brand" href="#top"><span className="brand-ball"><span /></span><span>HOOP<span>SCOUT</span></span></a>
         <p>Le basket des jeunes, sans frontières.</p>
-        <span>{tournaments.length} fiches · mises à jour le {VERIFIED_AT}</span>
+        <span>{tournaments.length} fiches · {checkedDateLabel ? `mises à jour le ${checkedDateLabel}` : "synchronisation en cours"}</span>
       </footer>
 
       {selected && (
@@ -1506,7 +1533,7 @@ function App() {
             <div className="detail-body">
               <div className="detail-labels">
                 <span className="country-label">{selected.countryLabel}</span>
-                <span className={`spots ${getAvailability(selected).className}`}><i /> {getAvailability(selected).label}</span>
+                <span className={`spots ${getAvailability(selected, today).className}`}><i /> {getAvailability(selected, today).label}</span>
               </div>
               <h2 id="detail-title">{selected.name}</h2>
               <p className="detail-location"><MapPin /> {selected.city} · {selected.region}</p>
@@ -1519,7 +1546,7 @@ function App() {
               </div>
               <div className="detail-ages">{selected.ageGroups.map((age) => <span key={age}>{age}</span>)}</div>
               <div className="organizer-line"><span>Organisé par</span><strong>{selected.organizer}</strong></div>
-              {selected.registrationUrl && !isPast(selected) && selected.availability !== "full" ? (
+              {selected.registrationUrl && !isPast(selected, today) && selected.availability !== "full" ? (
                 <a className="primary-button wide" href={selected.registrationUrl} target="_blank" rel="noreferrer">
                   Ouvrir l’inscription <ExternalLink size={18} />
                 </a>
@@ -1527,7 +1554,7 @@ function App() {
               <a className="source-button" href={selected.sourceUrl} target="_blank" rel="noreferrer">
                 <Link2 size={17} /> Voir la source : {selected.sourceLabel} <ExternalLink size={15} />
               </a>
-              <small className="demo-caption"><ShieldCheck size={13} /> Source vérifiée le {VERIFIED_AT}</small>
+              <small className="demo-caption"><ShieldCheck size={13} /> {checkedDateLabel ? `Source contrôlée le ${checkedDateLabel}` : "Contrôle de la source en cours"}</small>
             </div>
           </section>
         </div>

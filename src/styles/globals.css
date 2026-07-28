@@ -86,17 +86,8 @@ a { color: inherit; text-decoration: none; }
 
 .hero-visual { position: relative; min-height: 605px; overflow: hidden; background: var(--blue); }
 .hero-visual::before { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.09) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.09) 1px, transparent 1px); background-size: 34px 34px; content: ""; transform: rotate(-4deg) scale(1.1); }
-.court-board { position: absolute; top: 50%; left: 50%; width: min(530px, 86%); aspect-ratio: .94; border: 4px solid var(--ink); border-radius: 26px; background: var(--yellow); box-shadow: 18px 18px 0 rgba(21,28,43,.85); transform: translate(-49%, -49%) rotate(3deg); }
-.court-lines { position: absolute; inset: 20px; overflow: hidden; border: 3px solid rgba(21,28,43,.9); border-radius: 14px; }
-.court-lines::after { position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; background: var(--ink); content: ""; }
-.court-circle { position: absolute; z-index: 2; top: 50%; left: 50%; width: 112px; height: 112px; border: 3px solid var(--ink); border-radius: 50%; background: var(--yellow); transform: translate(-50%, -50%); }
-.court-key { position: absolute; z-index: 1; top: 50%; right: -3px; width: 115px; height: 175px; border: 3px solid var(--ink); transform: translateY(-50%); }
-.court-key::before { position: absolute; top: 50%; left: -55px; width: 108px; height: 108px; border: 3px solid var(--ink); border-radius: 50%; content: ""; transform: translateY(-50%); }
-.big-ball { position: absolute; z-index: 4; top: 23%; left: 22%; width: 205px; height: 205px; overflow: hidden; border: 5px solid var(--ink); border-radius: 50%; background: var(--orange); box-shadow: 12px 13px 0 rgba(21,28,43,.9); transform: rotate(-13deg); animation: hoverBall 4s ease-in-out infinite; }
-.ball-line { position: absolute; display: block; border: 4px solid var(--ink); border-radius: 50%; }
-.line-a { top: -10%; left: 45%; width: 28px; height: 120%; }
-.line-b { top: 42%; left: -10%; width: 120%; height: 28px; }
-.line-c { top: 3%; left: 3%; width: 94%; height: 94%; transform: translateX(46%); }
+.child-court-art { position: absolute; top: 50%; left: 50%; width: min(530px, 86%); aspect-ratio: 1; border: 4px solid var(--ink); border-radius: 26px; background: #f7f0df; box-shadow: 18px 18px 0 rgba(21,28,43,.85); transform: translate(-49%, -49%) rotate(2deg); }
+.child-court-art > img { display: block; width: 100%; height: 100%; border-radius: 21px; object-fit: cover; }
 .floating-card { position: absolute; z-index: 7; display: flex; align-items: center; gap: 10px; min-width: 154px; padding: 11px 14px; border: 3px solid var(--ink); border-radius: 13px; background: var(--paper); box-shadow: 6px 6px 0 var(--ink); }
 .floating-card > span { font-size: 26px; }
 .floating-card div { display: flex; flex-direction: column; }
@@ -108,7 +99,6 @@ a { color: inherit; text-decoration: none; }
 .dot-one { top: 13%; left: 10%; }
 .dot-two { right: 10%; bottom: 37%; width: 12px; height: 12px; background: var(--orange); }
 .motion-cross { position: absolute; z-index: 5; right: 13%; top: 36%; color: var(--ink); font-family: "Archivo Black"; font-size: 36px; transform: rotate(12deg); }
-@keyframes hoverBall { 0%,100% { transform: translateY(0) rotate(-13deg); } 50% { transform: translateY(-9px) rotate(-8deg); } }
 
 .finder { max-width: 1288px; margin: 0 auto; padding: 92px 24px 100px; }
 .finder-intro { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; margin-bottom: 28px; }
@@ -322,7 +312,7 @@ footer p { margin: 0; color: var(--ink); font-weight: 700; }
   .hero-copy { max-width: none; padding: 65px 24px 55px; }
   .hero h1 { font-size: clamp(43px, 12vw, 68px); }
   .hero-visual { min-height: 470px; }
-  .court-board { width: min(470px, 82%); }
+  .child-court-art { width: min(470px, 82%); }
   .finder { padding-top: 68px; }
   .finder-intro { align-items: flex-start; flex-direction: column; gap: 17px; }
   .period-tabs { overflow-x: auto; padding-bottom: 3px; }
@@ -347,8 +337,8 @@ footer p { margin: 0; color: var(--ink); font-weight: 700; }
   .hero-stats strong { font-size: 14px; }
   .hero-stats span { font-size: 8px; }
   .hero-visual { min-height: 390px; }
-  .court-board { width: 78%; border-radius: 18px; box-shadow: 11px 11px 0 rgba(21,28,43,.9); }
-  .big-ball { width: 145px; height: 145px; }
+  .child-court-art { width: 78%; border-radius: 18px; box-shadow: 11px 11px 0 rgba(21,28,43,.9); }
+  .child-court-art > img { border-radius: 13px; }
   .card-one { top: 7%; right: -7%; }
   .card-two { right: -2%; bottom: 6%; }
   .finder { padding: 58px 16px 75px; }
