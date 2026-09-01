@@ -13,6 +13,7 @@ import {
   Link2,
   MapPin,
   Menu,
+  Plus,
   RefreshCw,
   Search,
   ShieldCheck,
@@ -62,6 +63,22 @@ type SourceWatchStatus = {
   total: number;
   reachable: number;
   changed: number;
+};
+
+type CustomSourceKind = "public" | "facebook-profile" | "facebook-group";
+
+type CustomSource = {
+  id: string;
+  label: string;
+  url: string;
+  kind: CustomSourceKind;
+  addedAt: string;
+};
+
+const customSourceKindLabels: Record<CustomSourceKind, string> = {
+  public: "Lien public",
+  "facebook-profile": "Profil Facebook",
+  "facebook-group": "Groupe Facebook",
 };
 
 const SOURCE_STATUS_URL = "https://raw.githubusercontent.com/Etiennejck/Messagerie-CyberSend/main/public/source-status.json";
@@ -1212,10 +1229,24 @@ function App() {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [sourceWatch, setSourceWatch] = useState<SourceWatchStatus | null>(null);
   const [today, setToday] = useState(getBrusselsDateKey);
+  const [customSources, setCustomSources] = useState<CustomSource[]>(() => {
+    try {
+      const savedSources = JSON.parse(localStorage.getItem("hoopscout-custom-sources") || "[]");
+      return Array.isArray(savedSources) ? savedSources : [];
+    } catch {
+      return [];
+    }
+  });
+  const [showSourceManager, setShowSourceManager] = useState(false);
+  const [sourceError, setSourceError] = useState("");
 
   useEffect(() => {
     localStorage.setItem("hoopscout-favorites", JSON.stringify(saved));
   }, [saved]);
+
+  useEffect(() => {
+    localStorage.setItem("hoopscout-custom-sources", JSON.stringify(customSources));
+  }, [customSources]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -1296,6 +1327,40 @@ function App() {
     const current = JSON.parse(localStorage.getItem("hoopscout-proposals") || "[]");
     localStorage.setItem("hoopscout-proposals", JSON.stringify([...current, proposal]));
     setSubmitted(true);
+  };
+
+  const addCustomSource = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const kind = String(form.get("sourceKind") || "public") as CustomSourceKind;
+    const rawUrl = String(form.get("sourceUrl") || "").trim();
+    const rawLabel = String(form.get("sourceLabel") || "").trim();
+
+    try {
+      const parsedUrl = new URL(rawUrl);
+      const hostname = parsedUrl.hostname.toLowerCase();
+      const isFacebook = hostname === "facebook.com" || hostname.endsWith(".facebook.com") || hostname === "fb.com" || hostname.endsWith(".fb.com");
+      if (!/^https?:$/.test(parsedUrl.protocol)) throw new Error("Le lien doit commencer par https:// ou http://.");
+      if (kind !== "public" && !isFacebook) throw new Error("Pour un profil ou un groupe Facebook, utilise un lien facebook.com ou fb.com.");
+      if (customSources.some((source) => source.url === parsedUrl.toString())) throw new Error("Ce lien est déjà dans tes sources.");
+
+      const fallbackLabel = kind === "facebook-group" ? "Groupe Facebook" : kind === "facebook-profile" ? "Profil Facebook" : parsedUrl.hostname;
+      setCustomSources((current) => [...current, {
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        label: rawLabel || fallbackLabel,
+        url: parsedUrl.toString(),
+        kind,
+        addedAt: new Date().toISOString(),
+      }]);
+      setSourceError("");
+      event.currentTarget.reset();
+    } catch (error) {
+      setSourceError(error instanceof Error ? error.message : "Impossible d’ajouter ce lien.");
+    }
+  };
+
+  const removeCustomSource = (id: string) => {
+    setCustomSources((current) => current.filter((source) => source.id !== id));
   };
 
   return (
@@ -1483,7 +1548,11 @@ function App() {
               <span><strong>5</strong> provinces AWBB</span>
               <span><strong>5</strong> comités HDF</span>
               <span><strong>{internationalCount}</strong> tournois internationaux</span>
+              {customSources.length > 0 && <span><strong>{customSources.length}</strong> sources perso</span>}
             </div>
+            <button className="source-add-button primary-button" onClick={() => { setShowSourceManager(true); setSourceError(""); }}>
+              <Plus size={17} /> Ajouter une source
+            </button>
           </div>
           <div className="source-grid">
             {sourceNetworks.map((source) => (
@@ -1493,6 +1562,15 @@ function App() {
                 <em>{source.kind}</em>
                 <ExternalLink size={15} />
               </a>
+            ))}
+            {customSources.map((source) => (
+              <div key={source.id} className="source-card custom-source-card">
+                <span className="source-flag">{source.kind === "public" ? "🔗" : "ⓕ"}</span>
+                <span><strong>{source.label}</strong><small>{source.url}</small></span>
+                <em>{customSourceKindLabels[source.kind]} · à contrôler</em>
+                <a className="source-open" href={source.url} target="_blank" rel="noreferrer" aria-label={`Ouvrir ${source.label}`}><ExternalLink size={15} /></a>
+                <button className="source-remove" onClick={() => removeCustomSource(source.id)} aria-label={`Supprimer ${source.label}`}><X size={14} /></button>
+              </div>
             ))}
           </div>
         </section>
@@ -1587,6 +1665,32 @@ function App() {
                 <button className="primary-button" onClick={() => { setShowSubmit(false); setSubmitted(false); }}>Retour aux tournois</button>
               </div>
             )}
+          </section>
+        </div>
+      )}
+
+      {showSourceManager && (
+        <div className="modal-backdrop" role="presentation" onMouseDown={() => setShowSourceManager(false)}>
+          <section className="submit-modal source-manager" role="dialog" aria-modal="true" aria-labelledby="source-manager-title" onMouseDown={(event) => event.stopPropagation()}>
+            <button className="modal-close" onClick={() => setShowSourceManager(false)} aria-label="Fermer"><X /></button>
+            <span className="section-kicker"><Link2 size={15} /> Sources personnalisées</span>
+            <h2 id="source-manager-title">Ajoute tes liens au radar.</h2>
+            <p>Enregistre une page publique, un profil Facebook ou un groupe précis à vérifier. Les liens restent enregistrés sur cet appareil.</p>
+            <form onSubmit={addCustomSource}>
+              <label>Type de source
+                <select name="sourceKind" defaultValue="public">
+                  <option value="public">Lien public (club, comité, fédération…)</option>
+                  <option value="facebook-profile">Profil Facebook</option>
+                  <option value="facebook-group">Groupe Facebook</option>
+                </select>
+              </label>
+              <label>Nom court (facultatif)<input name="sourceLabel" placeholder="Ex. Groupe Stage / Camp Basket" /></label>
+              <label>Lien à suivre<input name="sourceUrl" required type="url" placeholder="https://www.facebook.com/groups/…" /></label>
+              {sourceError && <p className="form-error" role="alert">{sourceError}</p>}
+              <button className="primary-button wide" type="submit"><Plus size={17} /> Ajouter ce lien</button>
+            </form>
+            <div className="facebook-note"><strong>À savoir pour Facebook</strong><span>Les groupes et profils privés nécessitent une connexion et une autorisation. HoopScout ne contourne pas ces accès : seuls les contenus publics peuvent être contrôlés.</span></div>
+            {customSources.length > 0 && <div className="saved-sources"><strong>{customSources.length} source{customSources.length > 1 ? "s" : ""} enregistrée{customSources.length > 1 ? "s" : ""}</strong><span>Tu peux les supprimer depuis la liste « Sources suivies ».</span></div>}
           </section>
         </div>
       )}
